@@ -1,0 +1,79 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6543bnhy8765"]
+
+[ext_resource type="Script" path="res://scenes/aquarium_lobby/AquariumLobby.gd" id="1_lobby"]
+[ext_resource type="PackedScene" path="res://scenes/aquarium_lobby/MatchSettingsDialog.tscn" id="2_settings"]
+[ext_resource type="Theme" path="res://ui/theme/FishCoTheme.tres" id="3_theme"]
+
+[node name="AquariumLobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_theme")
+script = ExtResource("1_lobby")
+
+[node name="FishContainer" type="Node2D" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TopBar" type="VBoxContainer" parent="HUD"]
+theme = ExtResource("3_theme")
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 200.0
+offset_top = 30.0
+offset_right = -200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="HUD/TopBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "THE AQUARIUM TANK"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="HUD/TopBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "2 fish ready"
+horizontal_alignment = 1
+
+[node name="BottomBar" type="HBoxContainer" parent="HUD"]
+theme = ExtResource("3_theme")
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 460.0
+offset_top = -110.0
+offset_right = -460.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="SettingsBtn" type="Button" parent="HUD/BottomBar"]
+custom_minimum_size = Vector2(260, 64)
+layout_mode = 2
+text = "Match Settings"
+
+[node name="VsBtn" type="Button" parent="HUD/BottomBar"]
+custom_minimum_size = Vector2(300, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "PLAY VS MODE"
+
+[node name="CoopBtn" type="Button" parent="HUD/BottomBar"]
+custom_minimum_size = Vector2(280, 64)
+layout_mode = 2
+text = "Play Co-Op Mode"
+
+[node name="SettingsLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="MatchSettingsDialog" parent="SettingsLayer" instance=ExtResource("2_settings")]
+visible = false
