@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Fish-Co"
+config/name="Fish-Co (4 player implement"
 config/description="Fast-paced aquatic party game with scalable UI, local play & multiplayer mechanics."
 config/version="0.1.0"
 run/main_scene="res://scenes/main_menu/MainMenu.tscn"
@@ -22,6 +22,7 @@ EventBus="*res://autoloads/EventBus.gd"
 GameManager="*res://autoloads/GameManager.gd"
 NetworkManager="*res://autoloads/NetworkManager.gd"
 ModifierManager="*res://autoloads/ModifierManager.gd"
+InputManager="*res://autoloads/InputManager.gd"
 
 [display]
 

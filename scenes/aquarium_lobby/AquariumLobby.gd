@@ -1,11 +1,14 @@
 extends Control
 
-# Aquarium Lobby - the two-player home tank.
-# Redesigned with the shared UI system: ocean backdrop, rising bubbles,
-# two clearly identified player fish, and styled mode buttons.
+# Aquarium Lobby — 4-player home tank.
+# Features:
+#   · 4 distinct player columns so dropping fish never collide
+#   · Human players move freely in 6 directions to claim their avatar ("Move to claim!")
+#   · Bots wander autonomously in 6 directions
+#   · Auto-detection of control schemes (WASD, Arrows, Gamepads, IJKL, Numpad)
 
 const BUBBLE_TEXTURE := preload("res://assets/generated/ui_bubble.png")
-const AmbientFishScript := preload("res://scenes/aquarium_lobby/AmbientFish.gd")
+const LobbyFishScript := preload("res://scenes/aquarium_lobby/LobbyFish.gd")
 
 @onready var settings_modal: Control = $SettingsLayer/MatchSettingsDialog
 @onready var fish_container: Node2D = $FishContainer
@@ -14,8 +17,13 @@ const AmbientFishScript := preload("res://scenes/aquarium_lobby/AmbientFish.gd")
 @onready var coop_btn: Button = $HUD/BottomBar/CoopBtn
 @onready var settings_btn: Button = $HUD/BottomBar/SettingsBtn
 
+# 4 fixed column X positions inside the 1920-wide tank
+const COLUMNS : Array[float] = [340.0, 700.0, 1060.0, 1420.0]
+
+var _controls_hint: Label
+
 func _ready() -> void:
-	# Defensive guarantee: strictly a two-player local game
+	# Ensure 4-player pool (humans + bots according to match settings)
 	if GameManager.players.size() < 2:
 		GameManager.setup_local_players(2)
 
@@ -28,19 +36,17 @@ func _ready() -> void:
 	settings_btn.pressed.connect(_on_settings_pressed)
 
 	_build_ambience()
+	_build_controls_hint()
 	_populate_initial_fishes()
 	_refresh_lobby_ui()
 
 func _build_ambience() -> void:
-	# Clean deep-water gradient: the menu art's baked bubbles overwhelm the
-	# tank view, so the lobby uses a calm gradient + animated bubbles instead.
 	var bg: TextureRect = TextureRect.new()
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	bg.z_index = -2
 	add_child(bg)
 	UIHelpers.apply_ocean_gradient(bg)
 
-	# Rising decorative bubbles
 	var bubbles: Control = Control.new()
 	bubbles.set_anchors_preset(Control.PRESET_FULL_RECT)
 	bubbles.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -48,61 +54,63 @@ func _build_ambience() -> void:
 	add_child(bubbles)
 	UIHelpers.spawn_bubbles(bubbles, BUBBLE_TEXTURE, 14, Vector2(1920, 1080))
 
+func _build_controls_hint() -> void:
+	var top_bar = get_node_or_null("HUD/TopBar")
+	if top_bar:
+		_controls_hint = Label.new()
+		_controls_hint.text = "P1: WASD  |  P2: Arrow Keys  |  P3: Gamepad 1 / IJKL  |  P4: Gamepad 2 / Numpad"
+		_controls_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_controls_hint.add_theme_font_size_override("font_size", 16)
+		_controls_hint.add_theme_color_override("font_color", Color(0.65, 0.85, 0.95, 0.85))
+		top_bar.add_child(_controls_hint)
+
 func _populate_initial_fishes() -> void:
 	for child in fish_container.get_children():
 		child.queue_free()
 
-	# Two player fish, clearly separated and identified
-	_spawn_player_fish(0, Vector2(700, 560))
-	_spawn_player_fish(1, Vector2(1220, 480))
+	for i in range(GameManager.players.size()):
+		_spawn_player_fish(i)
 
-func _spawn_player_fish(player_idx: int, spawn_pos: Vector2) -> void:
-	var fish: CharacterBody2D = CharacterBody2D.new()
-	fish.position = spawn_pos
-	fish.set_script(AmbientFishScript)
+func _spawn_player_fish(player_idx: int) -> void:
+	var pd = GameManager.players[player_idx]
+	var col_x = COLUMNS[player_idx % COLUMNS.size()]
+
+	var fish = CharacterBody2D.new()
+	fish.set_script(LobbyFishScript)
+	fish.player_id = pd.player_id
+	fish.is_bot = pd.is_bot
+	fish.player_name = pd.player_name
+	fish.player_color = pd.get_color()
+	fish.position = Vector2(col_x, 540.0)
+
 	fish_container.add_child(fish)
-
-	var player_color: Color = UIHelpers.P1_COLOR if player_idx == 0 else UIHelpers.P2_COLOR
-	fish.setup_player_skin(player_idx, player_color)
-	fish.scale = Vector2(1.6, 1.6)
-	fish.vel_x = 100.0 + player_idx * 30.0
-
-	# Player name tag above the fish
-	var pd: PlayerData = GameManager.players[player_idx]
-	var lbl: Label = UIHelpers.make_sub_label(pd.player_name, 22, player_color)
-	lbl.add_theme_color_override("font_shadow_color", Color(0, 0.1, 0.18, 0.85))
-	lbl.add_theme_constant_override("shadow_offset_y", 2)
-	lbl.position = Vector2(-60, -70)
-	lbl.custom_minimum_size = Vector2(120, 26)
-	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	fish.add_child(lbl)
 
 func _refresh_lobby_ui() -> void:
 	if player_count_label:
-		player_count_label.text = "2 fish ready  |  Theme: %s  |  Round length: %ds" % [
+		player_count_label.text = "%d fish ready  |  Theme: %s  |  Round length: %ds" % [
+			GameManager.players.size(),
 			MatchConfig.THEME_NAMES.get(GameManager.match_config.background_theme, "Ocean"),
 			int(GameManager.match_config.round_time)
 		]
 
 func _on_config_saved() -> void:
+	# Re-setup players based on any updated bot settings
+	GameManager.setup_local_players(2)
+	_populate_initial_fishes()
 	_refresh_lobby_ui()
 
 func _on_settings_pressed() -> void:
 	if settings_modal:
 		settings_modal.open_settings()
 
-# --- Game Mode Starters (two-player guarded) ---
-
 func _on_vs_mode_pressed() -> void:
 	if GameManager.players.size() < 2:
-		player_count_label.text = "VS MODE NEEDS 2 PLAYERS!"
-		push_warning("AquariumLobby: VS mode blocked - fewer than 2 players initialized")
+		player_count_label.text = "VS MODE NEEDS AT LEAST 2 PLAYERS!"
 		return
 	GameManager.start_game_loop(GameManager.GameCategory.VS)
 
 func _on_coop_mode_pressed() -> void:
 	if GameManager.players.size() < 2:
-		player_count_label.text = "CO-OP NEEDS 2 PLAYERS!"
-		push_warning("AquariumLobby: Co-op blocked - fewer than 2 players initialized")
+		player_count_label.text = "CO-OP NEEDS AT LEAST 2 PLAYERS!"
 		return
 	GameManager.start_game_loop(GameManager.GameCategory.COOP)

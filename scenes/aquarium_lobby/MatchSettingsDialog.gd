@@ -95,7 +95,7 @@ func _on_save_pressed() -> void:
 	
 	var selected_games: Array[String] = []
 	if check_typing and check_typing.button_pressed:
-		selected_games.append("res://scenes/minigames/mg_typing_race/TypingRace.tscn")
+		selected_games.append("res://scenes/minigames/mg_typing_race/DirectionalCombo.tscn")
 	if check_flappy and check_flappy.button_pressed:
 		selected_games.append("res://scenes/minigames/mg_flappy_fish/FlappyFish.tscn")
 	if check_debris and check_debris.button_pressed:

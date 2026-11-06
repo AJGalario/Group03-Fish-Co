@@ -42,16 +42,19 @@ func _ready() -> void:
 
 func setup_players() -> void:
 	super.setup_players()
+	var idx = 0
 	for child in get_children():
 		if child is FishPlayer:
 			child.base_speed = 0.0
 			child.can_air_jump = true
-			child.jump_impulse = -450.0
+			# Calibrated gravity & impulse: responsive flapping with smooth terminal velocity
+			child.custom_gravity = 650.0
+			child.max_fall_speed = 420.0
+			child.jump_impulse = -380.0
 			child.velocity = Vector2.ZERO
-			if child.player_id == 0:
-				child.global_position = Vector2(player1_lane_x, 540)
-			else:
-				child.global_position = Vector2(player2_lane_x, 540)
+			# Stagger each player's starting column slightly so fish never overlap
+			child.global_position = Vector2(250.0 + idx * 55.0, 540.0)
+			idx += 1
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -69,8 +72,7 @@ func _process(delta: float) -> void:
 	if pillar_timer >= current_interval:
 		pillar_timer = 0.0
 		var gap_center: float = randf_range(320.0, 760.0)
-		_spawn_lane_pair(p1_pillars, player1_lane_x, gap_center, current_gap, current_speed)
-		_spawn_lane_pair(p2_pillars, player2_lane_x, gap_center, current_gap, current_speed)
+		_spawn_lane_pair(p1_pillars, -1.0, gap_center, current_gap, current_speed)
 
 	# --- SURVIVAL DISTANCE (progress tiebreaker) ---
 	for pd in GameManager.players:

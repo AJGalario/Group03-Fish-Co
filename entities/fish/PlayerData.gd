@@ -15,6 +15,11 @@ enum BotDifficulty { EASY, MEDIUM, HARD }
 @export var is_bot: bool = false
 @export var bot_difficulty: BotDifficulty = BotDifficulty.MEDIUM
 
+# Input and claiming configuration
+@export var device_id: int = -1
+@export var control_scheme: String = "" # "WASD", "ARROWS", "GAMEPAD", "IJKL", "NUMPAD"
+@export var is_claimed: bool = false
+
 # Oxygen/energy mechanics
 @export var oxygen: float = 100.0
 

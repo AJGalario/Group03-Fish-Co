@@ -20,6 +20,16 @@ const GREEN := Color("49db78")          # success / progress fill
 # Player identity colors (used across lobby, intros, HUDs, results)
 const P1_COLOR := Color("ffd166")       # warm golden yellow
 const P2_COLOR := Color("06d6a0")       # vivid teal-green
+const P3_COLOR := Color("118ab2")       # deep ocean cyan
+const P4_COLOR := Color("ef476f")       # coral pink
+
+static func get_player_color(idx: int) -> Color:
+	match idx % 4:
+		0: return P1_COLOR
+		1: return P2_COLOR
+		2: return P3_COLOR
+		3: return P4_COLOR
+		_: return P1_COLOR
 
 # --- GRADIENT BACKDROPS ---
 

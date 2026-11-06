@@ -9,6 +9,8 @@ extends CharacterBody2D
 # Movement Mode Flags
 @export var can_air_jump: bool = false
 @export var zero_gravity: bool = false # Free 8-directional swimming (DebrisDash)
+@export var custom_gravity: float = 980.0
+@export var max_fall_speed: float = 650.0
 
 var is_dead: bool = false
 var is_alive: bool:
@@ -133,17 +135,20 @@ func _process_input_and_movement(delta: float) -> void:
 		_process_zero_gravity_swim(delta)
 		return
 
-	# Standard platforming gravity
-	velocity.y += 980.0 * delta
+	# Standard platforming gravity with configurable max fall speed
+	velocity.y = minf(velocity.y + custom_gravity * delta, max_fall_speed)
 	
 	# Horizontal Movement
 	var move_x = Input.get_axis(input_prefix + "left", input_prefix + "right")
 	var target_vel_x = move_x * base_speed
 	velocity.x = lerp(velocity.x, target_vel_x, 0.25)
 	
-	# Jump / Flap Input check - the dedicated jump action ONLY.
-	# The action button is reserved for ready-up UI and must never move the fish.
+	# Jump / Flap Input check (allows jump action or action button when air jumping)
 	var jump_pressed: bool = Input.is_action_just_pressed(input_prefix + "jump")
+	if can_air_jump and not jump_pressed:
+		jump_pressed = Input.is_action_just_pressed(input_prefix + "action")
+	if player_id == 0 and not jump_pressed and can_air_jump:
+		jump_pressed = Input.is_key_pressed(KEY_SPACE) and Input.is_action_just_pressed("p1_action")
 
 	if jump_pressed:
 		if can_air_jump or is_on_floor() or is_on_ceiling():
@@ -202,7 +207,7 @@ func _process_bot_ai(delta: float) -> void:
 			$Visuals.scale.x = (-1.0 if velocity.x > 0 else 1.0) * body_scale
 		return
 
-	velocity.y += 980.0 * delta
+	velocity.y = minf(velocity.y + custom_gravity * delta, max_fall_speed)
 	bot_timer += delta
 	
 	# Flappy game bot logic
