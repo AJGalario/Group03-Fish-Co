@@ -1,0 +1,157 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctwincurrents03"]
+
+[ext_resource type="Script" path="res://scenes/coop/levels/Level3.gd" id="1_script"]
+[ext_resource type="Script" path="res://scenes/coop/elements/PressurePlate.gd" id="2_plate"]
+[ext_resource type="Script" path="res://scenes/coop/elements/CoralGate.gd" id="3_gate"]
+[ext_resource type="Script" path="res://scenes/coop/elements/ExitZone.gd" id="4_exit"]
+[ext_resource type="Theme" path="res://ui/theme/FishCoTheme.tres" id="5_theme"]
+
+[node name="Level3" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="Spawn1" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(220, 320)
+
+[node name="Spawn2" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(220, 780)
+
+[node name="Spawn3" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(300, 320)
+
+[node name="Spawn4" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(300, 780)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 50
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="TopWall" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(60, 60, 1860, 60, 1860, 110, 60, 110)
+
+[node name="TopVisual" type="ColorRect" parent="Walls"]
+offset_left = 60.0
+offset_top = 60.0
+offset_right = 1860.0
+offset_bottom = 110.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="BottomWall" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(60, 1010, 1860, 1010, 1860, 1060, 60, 1060)
+
+[node name="BottomVisual" type="ColorRect" parent="Walls"]
+offset_left = 60.0
+offset_top = 1010.0
+offset_right = 1860.0
+offset_bottom = 1060.0
+color = Color(0.65, 0.55, 0.35, 1)
+
+[node name="LeftWall" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(60, 60, 100, 60, 100, 1060, 60, 1060)
+
+[node name="LeftVisual" type="ColorRect" parent="Walls"]
+offset_left = 60.0
+offset_top = 60.0
+offset_right = 100.0
+offset_bottom = 1060.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="RightWall" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(1820, 60, 1860, 60, 1860, 1060, 1820, 1060)
+
+[node name="RightVisual" type="ColorRect" parent="Walls"]
+offset_left = 1820.0
+offset_top = 60.0
+offset_right = 1860.0
+offset_bottom = 1060.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="HorizontalDivider" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(100, 520, 1260, 520, 1260, 560, 100, 560)
+
+[node name="HorizontalDividerVis" type="ColorRect" parent="Walls"]
+offset_left = 100.0
+offset_top = 520.0
+offset_right = 1260.0
+offset_bottom = 560.0
+color = Color(0.08, 0.28, 0.36, 0.95)
+
+[node name="VerticalDividerTop" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(850, 110, 890, 110, 890, 240, 850, 240)
+
+[node name="VerticalDividerTopVis" type="ColorRect" parent="Walls"]
+offset_left = 850.0
+offset_top = 110.0
+offset_right = 890.0
+offset_bottom = 240.0
+color = Color(0.08, 0.28, 0.36, 0.95)
+
+[node name="VerticalDividerBot" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(850, 860, 890, 860, 890, 1010, 850, 1010)
+
+[node name="VerticalDividerBotVis" type="ColorRect" parent="Walls"]
+offset_left = 850.0
+offset_top = 860.0
+offset_right = 890.0
+offset_bottom = 1010.0
+color = Color(0.08, 0.28, 0.36, 0.95)
+
+[node name="FinalDividerUpper" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(1460, 110, 1500, 110, 1500, 420, 1460, 420)
+
+[node name="FinalDividerUpperVis" type="ColorRect" parent="Walls"]
+offset_left = 1460.0
+offset_top = 110.0
+offset_right = 1500.0
+offset_bottom = 420.0
+color = Color(0.08, 0.28, 0.36, 0.95)
+
+[node name="FinalDividerLower" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(1460, 720, 1500, 720, 1500, 1010, 1460, 1010)
+
+[node name="FinalDividerLowerVis" type="ColorRect" parent="Walls"]
+offset_left = 1460.0
+offset_top = 720.0
+offset_right = 1500.0
+offset_bottom = 1010.0
+color = Color(0.08, 0.28, 0.36, 0.95)
+
+[node name="PlateTop" type="Area2D" parent="."]
+position = Vector2(550, 505)
+script = ExtResource("2_plate")
+plate_color = Color(0.3, 0.9, 1.0, 1)
+
+[node name="PlateBot" type="Area2D" parent="."]
+position = Vector2(1050, 995)
+script = ExtResource("2_plate")
+plate_color = Color(1.0, 0.65, 0.2, 1)
+
+[node name="GateTop" type="StaticBody2D" parent="."]
+position = Vector2(870, 380)
+script = ExtResource("3_gate")
+open_offset = Vector2(0, -180)
+gate_size = Vector2(34, 280)
+
+[node name="GateBot" type="StaticBody2D" parent="."]
+position = Vector2(870, 710)
+script = ExtResource("3_gate")
+open_offset = Vector2(0, -180)
+gate_size = Vector2(34, 280)
+
+[node name="TeamPlate" type="Area2D" parent="."]
+position = Vector2(1360, 545)
+script = ExtResource("2_plate")
+required_count = 2
+plate_color = Color(0.4, 1.0, 0.7, 1)
+
+[node name="FinalGate" type="StaticBody2D" parent="."]
+position = Vector2(1480, 570)
+script = ExtResource("3_gate")
+open_offset = Vector2(0, -220)
+gate_size = Vector2(38, 300)
+
+[node name="ExitZone" type="Area2D" parent="."]
+position = Vector2(1660, 570)
+script = ExtResource("4_exit")

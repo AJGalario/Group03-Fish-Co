@@ -13,6 +13,9 @@ var match_config: MatchConfig = MatchConfig.new()
 var players: Array[PlayerData] = []
 var current_round: int = 0
 
+# Co-op progression — highest level number the players have unlocked (starts at 1)
+var coop_highest_unlocked_level: int = 1
+
 # --- SESSION CONFIGURATION ---
 # Editor-configurable default number of minigames per VS session
 @export var max_rounds: int = 5

@@ -1,0 +1,131 @@
+[gd_scene load_steps=8 format=3 uid="uid://cheavypearl02"]
+
+[ext_resource type="Script" path="res://scenes/coop/levels/Level2.gd" id="1_script"]
+[ext_resource type="Script" path="res://scenes/coop/elements/PressurePlate.gd" id="2_plate"]
+[ext_resource type="Script" path="res://scenes/coop/elements/CoralGate.gd" id="3_gate"]
+[ext_resource type="Script" path="res://scenes/coop/elements/PushPearl.gd" id="4_pearl"]
+[ext_resource type="Script" path="res://scenes/coop/elements/ClamSocket.gd" id="5_socket"]
+[ext_resource type="Script" path="res://scenes/coop/elements/ExitZone.gd" id="6_exit"]
+[ext_resource type="Theme" path="res://ui/theme/FishCoTheme.tres" id="7_theme"]
+
+[node name="Level2" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="Spawn1" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(200, 780)
+
+[node name="Spawn2" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(300, 780)
+
+[node name="Spawn3" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(200, 880)
+
+[node name="Spawn4" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(300, 880)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 50
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="TopWall" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(60, 60, 1860, 60, 1860, 110, 60, 110)
+
+[node name="TopVisual" type="ColorRect" parent="Walls"]
+offset_left = 60.0
+offset_top = 60.0
+offset_right = 1860.0
+offset_bottom = 110.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="BottomWall" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(60, 1010, 1860, 1010, 1860, 1060, 60, 1060)
+
+[node name="BottomVisual" type="ColorRect" parent="Walls"]
+offset_left = 60.0
+offset_top = 1010.0
+offset_right = 1860.0
+offset_bottom = 1060.0
+color = Color(0.65, 0.55, 0.35, 1)
+
+[node name="LeftWall" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(60, 60, 100, 60, 100, 1060, 60, 1060)
+
+[node name="LeftVisual" type="ColorRect" parent="Walls"]
+offset_left = 60.0
+offset_top = 60.0
+offset_right = 100.0
+offset_bottom = 1060.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="RightWall" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(1820, 60, 1860, 60, 1860, 1060, 1820, 1060)
+
+[node name="RightVisual" type="ColorRect" parent="Walls"]
+offset_left = 1820.0
+offset_top = 60.0
+offset_right = 1860.0
+offset_bottom = 1060.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="CenterLedge" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(500, 520, 1200, 520, 1200, 560, 500, 560)
+
+[node name="CenterLedgeVis" type="ColorRect" parent="Walls"]
+offset_left = 500.0
+offset_top = 520.0
+offset_right = 1200.0
+offset_bottom = 560.0
+color = Color(0.1, 0.3, 0.4, 0.95)
+
+[node name="ExitDividerUpper" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(1450, 110, 1490, 110, 1490, 480, 1450, 480)
+
+[node name="ExitDividerUpperVis" type="ColorRect" parent="Walls"]
+offset_left = 1450.0
+offset_top = 110.0
+offset_right = 1490.0
+offset_bottom = 480.0
+color = Color(0.08, 0.28, 0.36, 0.9)
+
+[node name="ExitDividerLower" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(1450, 800, 1490, 800, 1490, 1010, 1450, 1010)
+
+[node name="ExitDividerLowerVis" type="ColorRect" parent="Walls"]
+offset_left = 1450.0
+offset_top = 800.0
+offset_right = 1490.0
+offset_bottom = 1010.0
+color = Color(0.08, 0.28, 0.36, 0.9)
+
+[node name="PlateRamp" type="Area2D" parent="."]
+position = Vector2(300, 995)
+script = ExtResource("2_plate")
+plate_color = Color(0.3, 0.9, 0.7, 1)
+
+[node name="GateRamp" type="StaticBody2D" parent="."]
+position = Vector2(490, 390)
+script = ExtResource("3_gate")
+open_offset = Vector2(0, -180)
+gate_size = Vector2(32, 260)
+
+[node name="PushPearl" type="CharacterBody2D" parent="."]
+position = Vector2(750, 460)
+script = ExtResource("4_pearl")
+pearl_radius = 42.0
+
+[node name="ClamSocket" type="Area2D" parent="."]
+position = Vector2(1150, 960)
+script = ExtResource("5_socket")
+
+[node name="GateExit" type="StaticBody2D" parent="."]
+position = Vector2(1470, 640)
+script = ExtResource("3_gate")
+open_offset = Vector2(0, -240)
+gate_size = Vector2(38, 320)
+
+[node name="ExitZone" type="Area2D" parent="."]
+position = Vector2(1660, 640)
+script = ExtResource("6_exit")

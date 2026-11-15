@@ -178,4 +178,9 @@ func _on_coop_mode_pressed() -> void:
 	if GameManager.players.size() < 2:
 		player_count_label.text = "CO-OP NEEDS AT LEAST 2 PLAYERS!"
 		return
-	GameManager.start_game_loop(GameManager.GameCategory.COOP)
+	var target := "res://scenes/coop/CoopCountdown.tscn"
+	var sl := get_node_or_null("/root/SceneLoader")
+	if sl:
+		sl.change_scene(target)
+	else:
+		get_tree().change_scene_to_file(target)
