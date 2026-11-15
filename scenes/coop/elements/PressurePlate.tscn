@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://coop_elem_pressureplate"]
+
+[ext_resource type="Script" path="res://scenes/coop/elements/PressurePlate.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="1_shape"]
+size = Vector2(100, 24)
+
+[node name="PressurePlate" type="Area2D"]
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1_shape")
+
+[node name="Base" type="ColorRect" parent="."]
+offset_left = -55.0
+offset_top = 6.0
+offset_right = 55.0
+offset_bottom = 20.0
+color = Color(0.08, 0.18, 0.26, 0.95)
+
+[node name="Pedal" type="ColorRect" parent="."]
+offset_left = -48.0
+offset_top = -10.0
+offset_right = 48.0
+offset_bottom = 8.0
+color = Color(0.35, 0.95, 1, 1)
+
+[node name="GlowLine" type="ColorRect" parent="."]
+offset_left = -48.0
+offset_top = -10.0
+offset_right = 48.0
+offset_bottom = -6.0
+color = Color(1, 1, 1, 0.9)
+
+[node name="CountLabel" type="Label" parent="."]
+offset_left = -60.0
+offset_top = -42.0
+offset_right = 60.0
+offset_bottom = -18.0
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 1, 1, 1)

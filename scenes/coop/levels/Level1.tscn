@@ -1,13 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://clevel1tutorial01"]
+[gd_scene load_steps=7 format=3 uid="uid://clevel1tutorial01"]
 
 [ext_resource type="Script" path="res://scenes/coop/levels/Level1.gd" id="1_script"]
-[ext_resource type="Script" path="res://scenes/coop/elements/PressurePlate.gd" id="2_plate"]
-[ext_resource type="Script" path="res://scenes/coop/elements/CoralGate.gd" id="3_gate"]
-[ext_resource type="Script" path="res://scenes/coop/elements/ExitZone.gd" id="4_exit"]
-[ext_resource type="Theme" path="res://ui/theme/FishCoTheme.tres" id="5_theme"]
+[ext_resource type="PackedScene" path="res://scenes/coop/elements/PressurePlate.tscn" id="2_plate"]
+[ext_resource type="PackedScene" path="res://scenes/coop/elements/CoralGate.tscn" id="3_gate"]
+[ext_resource type="PackedScene" path="res://scenes/coop/elements/ExitZone.tscn" id="4_exit"]
+
+[sub_resource type="RectangleShape2D" id="wall_top"]
+size = Vector2(1800, 50)
+
+[sub_resource type="RectangleShape2D" id="wall_bottom"]
+size = Vector2(1800, 50)
+
+[sub_resource type="RectangleShape2D" id="wall_left"]
+size = Vector2(40, 1000)
+
+[sub_resource type="RectangleShape2D" id="wall_right"]
+size = Vector2(40, 1000)
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_script")
+level_number = 1
+level_title = "First Splash"
+level_instruction = "Step on the coral plates to open the gates for your partner!"
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 50
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
@@ -23,113 +40,69 @@ position = Vector2(240, 680)
 [node name="Spawn4" type="Marker2D" parent="SpawnPoints"]
 position = Vector2(340, 680)
 
-[node name="HUD" type="CanvasLayer" parent="."]
-layer = 50
-
 [node name="Walls" type="StaticBody2D" parent="."]
 
-[node name="TopWall" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(60, 60, 1860, 60, 1860, 110, 60, 110)
+[node name="TopWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2(960, 85)
+shape = SubResource("wall_top")
 
-[node name="TopVisual" type="ColorRect" parent="Walls"]
+[node name="TopWallVis" type="ColorRect" parent="Walls"]
 offset_left = 60.0
 offset_top = 60.0
 offset_right = 1860.0
 offset_bottom = 110.0
 color = Color(0.06, 0.22, 0.3, 0.9)
 
-[node name="BottomWall" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(60, 1010, 1860, 1010, 1860, 1060, 60, 1060)
+[node name="BottomWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2(960, 1035)
+shape = SubResource("wall_bottom")
 
-[node name="BottomVisual" type="ColorRect" parent="Walls"]
+[node name="BottomWallVis" type="ColorRect" parent="Walls"]
 offset_left = 60.0
 offset_top = 1010.0
 offset_right = 1860.0
 offset_bottom = 1060.0
 color = Color(0.65, 0.55, 0.35, 1)
 
-[node name="LeftWall" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(60, 60, 100, 60, 100, 1060, 60, 1060)
+[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2(80, 560)
+shape = SubResource("wall_left")
 
-[node name="LeftVisual" type="ColorRect" parent="Walls"]
+[node name="LeftWallVis" type="ColorRect" parent="Walls"]
 offset_left = 60.0
 offset_top = 60.0
 offset_right = 100.0
 offset_bottom = 1060.0
 color = Color(0.06, 0.22, 0.3, 0.9)
 
-[node name="RightWall" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(1820, 60, 1860, 60, 1860, 1060, 1820, 1060)
+[node name="RightWall" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1840, 560)
+shape = SubResource("wall_right")
 
-[node name="RightVisual" type="ColorRect" parent="Walls"]
+[node name="RightWallVis" type="ColorRect" parent="Walls"]
 offset_left = 1820.0
 offset_top = 60.0
 offset_right = 1860.0
 offset_bottom = 1060.0
 color = Color(0.06, 0.22, 0.3, 0.9)
 
-[node name="Divider1Upper" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(700, 110, 740, 110, 740, 420, 700, 420)
-
-[node name="Divider1UpperVis" type="ColorRect" parent="Walls"]
-offset_left = 700.0
-offset_top = 110.0
-offset_right = 740.0
-offset_bottom = 420.0
-color = Color(0.08, 0.28, 0.36, 0.9)
-
-[node name="Divider1Lower" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(700, 720, 740, 720, 740, 1010, 700, 1010)
-
-[node name="Divider1LowerVis" type="ColorRect" parent="Walls"]
-offset_left = 700.0
-offset_top = 720.0
-offset_right = 740.0
-offset_bottom = 1010.0
-color = Color(0.08, 0.28, 0.36, 0.9)
-
-[node name="Divider2Upper" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(1280, 110, 1320, 110, 1320, 420, 1280, 420)
-
-[node name="Divider2UpperVis" type="ColorRect" parent="Walls"]
-offset_left = 1280.0
-offset_top = 110.0
-offset_right = 1320.0
-offset_bottom = 420.0
-color = Color(0.08, 0.28, 0.36, 0.9)
-
-[node name="Divider2Lower" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(1280, 720, 1320, 720, 1320, 1010, 1280, 1010)
-
-[node name="Divider2LowerVis" type="ColorRect" parent="Walls"]
-offset_left = 1280.0
-offset_top = 720.0
-offset_right = 1320.0
-offset_bottom = 1010.0
-color = Color(0.08, 0.28, 0.36, 0.9)
-
-[node name="Plate1" type="Area2D" parent="."]
+[node name="Plate1" parent="." instance=ExtResource("2_plate")]
 position = Vector2(460, 995)
-script = ExtResource("2_plate")
 plate_color = Color(0.2, 0.85, 0.95, 1)
 
-[node name="Gate1" type="StaticBody2D" parent="."]
+[node name="Gate1" parent="." instance=ExtResource("3_gate")]
 position = Vector2(720, 570)
-script = ExtResource("3_gate")
 open_offset = Vector2(0, -220)
 gate_size = Vector2(38, 300)
 
-[node name="Plate2" type="Area2D" parent="."]
+[node name="Plate2" parent="." instance=ExtResource("2_plate")]
 position = Vector2(1020, 995)
-script = ExtResource("2_plate")
 plate_color = Color(0.95, 0.6, 0.2, 1)
 
-[node name="Gate2" type="StaticBody2D" parent="."]
+[node name="Gate2" parent="." instance=ExtResource("3_gate")]
 position = Vector2(1300, 570)
-script = ExtResource("3_gate")
 open_offset = Vector2(0, -220)
 gate_size = Vector2(38, 300)
 
-[node name="ExitZone" type="Area2D" parent="."]
+[node name="ExitZone" parent="." instance=ExtResource("4_exit")]
 position = Vector2(1600, 570)
-script = ExtResource("4_exit")

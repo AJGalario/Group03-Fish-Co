@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://coop_elem_clamsocket"]
+
+[ext_resource type="Script" path="res://scenes/coop/elements/ClamSocket.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="1_shape"]
+radius = 38.0
+
+[node name="ClamSocket" type="Area2D"]
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1_shape")
+
+[node name="RingRect" type="ColorRect" parent="."]
+offset_left = -38.0
+offset_top = -38.0
+offset_right = 38.0
+offset_bottom = 38.0
+color = Color(0.2, 0.7, 0.8, 0.35)
+
+[node name="IndicatorRect" type="ColorRect" parent="."]
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+color = Color(0.1, 0.2, 0.3, 0.8)
+
+[node name="SocketLabel" type="Label" parent="."]
+offset_left = -35.0
+offset_top = -12.0
+offset_right = 35.0
+offset_bottom = 12.0
+text = "SOCKET"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 1, 1, 0.7)
