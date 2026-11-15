@@ -151,6 +151,12 @@ func _spawn_coop_players() -> void:
 		fish.player_color = pd.get_color()
 		fish.position = spawns[i % spawns.size()]
 
+		# Override the lobby tank bounds to match the full coop level area
+		fish.tank_left   = 100.0
+		fish.tank_right  = 1820.0
+		fish.tank_top    = 110.0
+		fish.tank_bottom = 1005.0  # just above the floor wall at y=1010
+
 		add_child(fish)
 		_fish_nodes.append(fish)
 
