@@ -23,6 +23,7 @@ GameManager="*res://autoloads/GameManager.gd"
 NetworkManager="*res://autoloads/NetworkManager.gd"
 ModifierManager="*res://autoloads/ModifierManager.gd"
 InputManager="*res://autoloads/InputManager.gd"
+SceneLoader="*res://autoloads/SceneLoader.gd"
 
 [display]
 

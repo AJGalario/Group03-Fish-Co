@@ -147,6 +147,12 @@ theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Pellet Frenzy (osu!catch + Slap)"
 
+[node name="CheckLaunch" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+button_pressed = true
+text = "Pellet Leap (Acrobatic Jump & Catch)"
+
 [node name="HSeparator3" type="HSeparator" parent="Panel/Margin/VBox"]
 layout_mode = 2
 

@@ -15,7 +15,8 @@ enum BackgroundTheme { DEEP_OCEAN, CORAL_REEF, SUNKEN_RUINS, MIDNIGHT_TRENCH }
 	"res://scenes/minigames/mg_flappy_fish/FlappyFish.tscn",
 	"res://scenes/minigames/mg_debris_dash/DebrisDash.tscn",
 	"res://scenes/minigames/mg_pellet_catch/PelletCatch.tscn",
-	"res://scenes/minigames/mg_puffer_panic/PufferPanic.tscn"
+	"res://scenes/minigames/mg_puffer_panic/PufferPanic.tscn",
+	"res://scenes/minigames/mg_pellet_launch/PelletLaunch.tscn"
 ]
 
 # Bot settings

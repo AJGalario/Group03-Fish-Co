@@ -98,12 +98,18 @@ func _build_buttons() -> void:
 
 func _on_enter_aquarium_pressed() -> void:
 	GameManager.setup_local_players(2)  # Always two fish by default
-	get_tree().change_scene_to_file("res://scenes/aquarium_lobby/AquariumLobby.tscn")
+	if SceneLoader:
+		SceneLoader.change_scene("res://scenes/aquarium_lobby/AquariumLobby.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/aquarium_lobby/AquariumLobby.tscn")
 
 func _on_settings_pressed() -> void:
 	# Settings live in the lobby; jump there directly
 	GameManager.setup_local_players(2)
-	get_tree().change_scene_to_file("res://scenes/aquarium_lobby/AquariumLobby.tscn")
+	if SceneLoader:
+		SceneLoader.change_scene("res://scenes/aquarium_lobby/AquariumLobby.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/aquarium_lobby/AquariumLobby.tscn")
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()

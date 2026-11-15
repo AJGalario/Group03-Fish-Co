@@ -47,6 +47,13 @@ func _ready() -> void:
 		_pick_bot_target()
 
 func _build_visuals() -> void:
+	# Add physics collision shape for proper CharacterBody2D physics
+	var col = CollisionShape2D.new()
+	var shape = CircleShape2D.new()
+	shape.radius = 24.0
+	col.shape = shape
+	add_child(col)
+
 	_sprite = Sprite2D.new()
 	_sprite.texture        = load("res://entities/fish/Fish_Sprite_Sheet_16.png")
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -92,6 +99,20 @@ func _build_visuals() -> void:
 		_tip_label.add_theme_color_override("font_color", Color(0.3, 1.0, 0.75))
 		add_child(_tip_label)
 		_pulse_tip()
+
+func drop_into_tank(target_pos: Vector2) -> void:
+	position = Vector2(target_pos.x, -80.0)
+	var tw = create_tween()
+	tw.set_trans(Tween.TRANS_QUAD)
+	tw.set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "position:y", target_pos.y, 0.75)
+	tw.tween_callback(func():
+		# Gentle bounce on entry
+		var b_tw = create_tween()
+		b_tw.set_trans(Tween.TRANS_SINE)
+		b_tw.tween_property(self, "position:y", target_pos.y - 25.0, 0.25)
+		b_tw.tween_property(self, "position:y", target_pos.y, 0.25)
+	)
 
 func _physics_process(delta: float) -> void:
 	if is_bot:

@@ -13,6 +13,7 @@ signal config_discarded
 @onready var check_flappy: CheckBox = $Panel/Margin/VBox/MinigameBox/CheckFlappy
 @onready var check_debris: CheckBox = $Panel/Margin/VBox/MinigameBox/CheckDebris
 @onready var check_pellet: CheckBox = $Panel/Margin/VBox/MinigameBox/CheckPellet
+@onready var check_launch: CheckBox = $Panel/Margin/VBox/MinigameBox/CheckLaunch
 
 # Bots
 @onready var bot_count_option: OptionButton = $Panel/Margin/VBox/Grid/BotCountOption
@@ -76,6 +77,8 @@ func _load_config_into_ui(cfg: MatchConfig) -> void:
 		check_debris.button_pressed = "res://scenes/minigames/mg_debris_dash/DebrisDash.tscn" in cfg.enabled_minigames
 	if check_pellet:
 		check_pellet.button_pressed = "res://scenes/minigames/mg_pellet_catch/PelletCatch.tscn" in cfg.enabled_minigames
+	if check_launch:
+		check_launch.button_pressed = "res://scenes/minigames/mg_pellet_launch/PelletLaunch.tscn" in cfg.enabled_minigames
 	
 	if bot_count_option:
 		bot_count_option.selected = cfg.bot_count
@@ -102,6 +105,8 @@ func _on_save_pressed() -> void:
 		selected_games.append("res://scenes/minigames/mg_debris_dash/DebrisDash.tscn")
 	if check_pellet and check_pellet.button_pressed:
 		selected_games.append("res://scenes/minigames/mg_pellet_catch/PelletCatch.tscn")
+	if check_launch and check_launch.button_pressed:
+		selected_games.append("res://scenes/minigames/mg_pellet_launch/PelletLaunch.tscn")
 		
 	if selected_games.is_empty():
 		selected_games = GameManager.all_vs_minigames.duplicate()

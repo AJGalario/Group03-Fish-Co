@@ -32,7 +32,8 @@ var all_vs_minigames: Array[String] = [
 	"res://scenes/minigames/mg_flappy_fish/FlappyFish.tscn",
 	"res://scenes/minigames/mg_debris_dash/DebrisDash.tscn",
 	"res://scenes/minigames/mg_pellet_catch/PelletCatch.tscn",
-	"res://scenes/minigames/mg_puffer_panic/PufferPanic.tscn"
+	"res://scenes/minigames/mg_puffer_panic/PufferPanic.tscn",
+	"res://scenes/minigames/mg_pellet_launch/PelletLaunch.tscn"
 ]
 
 # Co-op Minigame catalog
@@ -168,17 +169,19 @@ func next_round() -> void:
 	current_round += 1
 	previous_minigame_scene = chosen_scene
 
-	# 5. Load the minigame, checking for a failed load so the session
-	#    can never get silently stuck on a broken scene.
-	var load_error: int = get_tree().change_scene_to_file(chosen_scene)
-	if load_error != OK:
-		push_error("GameManager: failed to load minigame scene '" + chosen_scene + "' (error " + str(load_error) + ") - returning to lobby")
-		# A failed load does not count as a played round
-		current_round -= 1
-		previous_minigame_scene = ""
-		current_state = GameState.LOBBY_AQUARIUM
-		get_tree().change_scene_to_file("res://scenes/aquarium_lobby/AquariumLobby.tscn")
-		return
+	# 5. Load the minigame with animated loading screen & trivia
+	if SceneLoader:
+		SceneLoader.change_scene(chosen_scene)
+	else:
+		var load_error: int = get_tree().change_scene_to_file(chosen_scene)
+		if load_error != OK:
+			push_error("GameManager: failed to load minigame scene '" + chosen_scene + "' (error " + str(load_error) + ") - returning to lobby")
+			# A failed load does not count as a played round
+			current_round -= 1
+			previous_minigame_scene = ""
+			current_state = GameState.LOBBY_AQUARIUM
+			get_tree().change_scene_to_file("res://scenes/aquarium_lobby/AquariumLobby.tscn")
+			return
 
 	current_state = GameState.MINIGAME
 
@@ -212,11 +215,17 @@ func complete_minigame(ranked_player_ids: Array, tie: bool = false) -> void:
 				var pts: int = points[min(i, points.size() - 1)]
 				pd.total_score += pts
 
-	get_tree().change_scene_to_file("res://scenes/ui/RoundResults.tscn")
+	if SceneLoader:
+		SceneLoader.change_scene("res://scenes/ui/RoundResults.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/ui/RoundResults.tscn")
 
 func show_podium() -> void:
 	current_state = GameState.PODIUM
-	get_tree().change_scene_to_file("res://scenes/ui/Podium.tscn")
+	if SceneLoader:
+		SceneLoader.change_scene("res://scenes/ui/Podium.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/ui/Podium.tscn")
 
 func get_player_data(player_id: int) -> PlayerData:
 	for p in players:

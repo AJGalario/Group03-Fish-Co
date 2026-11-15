@@ -177,7 +177,13 @@ func _run_ceremony() -> void:
 		spin.tween_property(fish_in_net, "rotation", -0.35, 0.25))
 
 func _on_menu_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main_menu/MainMenu.tscn")
+	if SceneLoader:
+		SceneLoader.change_scene("res://scenes/main_menu/MainMenu.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/main_menu/MainMenu.tscn")
 
 func _on_aquarium_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/aquarium_lobby/AquariumLobby.tscn")
+	if SceneLoader:
+		SceneLoader.change_scene("res://scenes/aquarium_lobby/AquariumLobby.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/aquarium_lobby/AquariumLobby.tscn")
