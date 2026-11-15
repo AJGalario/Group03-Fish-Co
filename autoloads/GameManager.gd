@@ -39,10 +39,8 @@ var all_vs_minigames: Array[String] = [
 	"res://scenes/minigames/mg_pellet_launch/PelletLaunch.tscn"
 ]
 
-# Co-op Minigame catalog
-var coop_minigames: Array[String] = [
-	"res://scenes/minigames/mg_pico_leak/PicoLeak.tscn"
-]
+# Co-op uses CoopLevelSelect → Level scenes directly (not this queue)
+var coop_minigames: Array[String] = []
 
 # Randomized queue: no minigame repeats until the pool has been exhausted
 var _shuffled_queue: Array[String] = []
