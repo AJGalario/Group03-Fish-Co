@@ -36,14 +36,14 @@ func _ready() -> void:
 	is_team_mode = (p_count == 4)
 
 	if is_team_mode:
-		minigame_instructions = "2v2 TANK LEAP! Work together in your aquarium to catch the most pellets!"
-		minigame_objective = "Launch into the air and catch more pellets than the rival team!"
+		minigame_instructions = "2v2 TANK LEAP! Hold Space/Enter to CHARGE from the depths!\nDive nose-down on re-entry or suffer a 2s belly flop stun!"
+		minigame_objective = "Charge deep launches to snatch high pellets! Avoid belly flops!"
 	else:
-		minigame_instructions = "SOLO LEAP! Launch out of the water to snatch the most pellets!"
-		minigame_objective = "Snatch floating pellets from the air before time runs out!"
+		minigame_instructions = "SOLO LEAP! Hold Space/Enter to CHARGE from the depths!\nDive nose-down on re-entry or suffer a 2s belly flop stun!"
+		minigame_objective = "Charge deep launches to snatch pellets! Avoid belly flops!"
 
-	minigame_controls_p1 = "WASD to swim, Space to Launch"
-	minigame_controls_p2 = "Arrow Keys to swim, Enter to Launch"
+	minigame_controls_p1 = "WASD to swim/dive, Hold Space to Charge Launch"
+	minigame_controls_p2 = "Arrows to swim/dive, Hold Enter to Charge Launch"
 
 	super._ready()
 	_build_tanks_environment()
@@ -51,7 +51,9 @@ func _ready() -> void:
 	_spawn_initial_pellets()
 
 func setup_players() -> void:
-	# Clear any base spawn markers
+	# Clear any base spawn markers and populate surviving players so round timer counts down!
+	surviving_player_ids.clear()
+	eliminated_order.clear()
 	_fish_instances.clear()
 
 	var p_count = GameManager.players.size()
@@ -59,6 +61,8 @@ func setup_players() -> void:
 
 	for i in range(p_count):
 		var pd = GameManager.players[i]
+		pd.reset_for_round()
+		surviving_player_ids.append(pd.player_id)
 		player_scores[pd.player_id] = 0
 
 		var fish = CharacterBody2D.new()
@@ -96,6 +100,14 @@ func setup_players() -> void:
 
 		add_child(fish)
 		_fish_instances.append(fish)
+
+	# Initially freeze fish physics during intro and countdown
+	_set_all_fish_physics(false)
+
+func _set_all_fish_physics(enabled: bool) -> void:
+	for fish in _fish_instances:
+		if is_instance_valid(fish):
+			fish.set_physics_process(enabled)
 
 func _build_tanks_environment() -> void:
 	# Air / Sky backdrop above water line
@@ -350,9 +362,57 @@ func _on_fish_breached(_fish: PelletLaunchFish, at_pos: Vector2) -> void:
 	# Water splash effect on launch
 	_spawn_splash_visual(Vector2(at_pos.x, WATER_SURFACE_Y), Color(0.4, 0.9, 1.0, 0.8))
 
-func _on_fish_splashed(_fish: PelletLaunchFish, at_pos: Vector2) -> void:
-	# Splash down visual
-	_spawn_splash_visual(Vector2(at_pos.x, WATER_SURFACE_Y), Color(0.6, 0.95, 1.0, 0.9))
+func _on_fish_splashed(_fish: PelletLaunchFish, at_pos: Vector2, is_belly_flop: bool = false) -> void:
+	if is_belly_flop:
+		_spawn_belly_flop_splash(Vector2(at_pos.x, WATER_SURFACE_Y))
+	else:
+		_spawn_clean_dive_splash(Vector2(at_pos.x, WATER_SURFACE_Y))
+
+func _spawn_clean_dive_splash(pos: Vector2) -> void:
+	# Narrow vertical clean dive droplets
+	for i in range(8):
+		var splash = ColorRect.new()
+		splash.size = Vector2(randf_range(5, 8), randf_range(8, 14))
+		splash.position = pos + Vector2(randf_range(-10, 10), randf_range(-4, 2))
+		splash.color = Color(0.65, 0.95, 1.0, 0.9)
+		add_child(splash)
+
+		var tw = splash.create_tween()
+		tw.set_parallel(true)
+		tw.tween_property(splash, "position:y", splash.position.y - randf_range(25, 45), 0.3)
+		tw.tween_property(splash, "position:x", splash.position.x + randf_range(-12, 12), 0.3)
+		tw.tween_property(splash, "modulate:a", 0.0, 0.35)
+		tw.chain().tween_callback(splash.queue_free)
+
+func _spawn_belly_flop_splash(pos: Vector2) -> void:
+	# Huge forceful horizontal water slap
+	for i in range(16):
+		var splash = ColorRect.new()
+		splash.size = Vector2(randf_range(10, 20), randf_range(6, 12))
+		var dir_side = -1.0 if randf() < 0.5 else 1.0
+		splash.position = pos + Vector2(randf_range(-25, 25), randf_range(-6, 4))
+		splash.color = Color(1.0, 0.6, 0.4, 0.95) if i % 2 == 0 else Color(1.0, 0.95, 0.8, 0.95)
+		add_child(splash)
+
+		var tw = splash.create_tween()
+		tw.set_parallel(true)
+		tw.tween_property(splash, "position:x", splash.position.x + dir_side * randf_range(30, 95), 0.35)
+		tw.tween_property(splash, "position:y", splash.position.y - randf_range(10, 30), 0.35)
+		tw.tween_property(splash, "modulate:a", 0.0, 0.4)
+		tw.chain().tween_callback(splash.queue_free)
+
+	# Water shockwave bar
+	var wave = ColorRect.new()
+	wave.size = Vector2(12, 6)
+	wave.position = Vector2(pos.x - 6, WATER_SURFACE_Y - 3)
+	wave.color = Color(1.0, 0.85, 0.5, 0.85)
+	add_child(wave)
+	var wave_tw = wave.create_tween()
+	wave_tw.set_parallel(true)
+	wave_tw.tween_property(wave, "size", Vector2(110, 10), 0.3)
+	wave_tw.tween_property(wave, "position", Vector2(pos.x - 55, WATER_SURFACE_Y - 5), 0.3)
+	wave_tw.tween_property(wave, "modulate:a", 0.0, 0.32)
+	wave_tw.chain().tween_callback(wave.queue_free)
 
 func _spawn_splash_visual(pos: Vector2, color: Color) -> void:
 	for i in range(5):
