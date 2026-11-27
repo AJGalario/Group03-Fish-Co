@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://clevel1tutorial01"]
+[gd_scene load_steps=8 format=3 uid="uid://clevel1tutorial01"]
 
 [ext_resource type="Script" path="res://scenes/coop/levels/Level1.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/PressurePlate.tscn" id="2_plate"]
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/CoralGate.tscn" id="3_gate"]
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/ExitZone.tscn" id="4_exit"]
+[ext_resource type="PackedScene" path="res://scenes/coop/CoopHUD.tscn" id="5_hud"]
 
 [sub_resource type="RectangleShape2D" id="wall_top"]
 size = Vector2(1800, 50)
@@ -25,6 +26,8 @@ level_instruction = "Step on the coral plates to open the gates for your partner
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 50
+
+[node name="CoopHUD" parent="HUD" instance=ExtResource("5_hud")]
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 

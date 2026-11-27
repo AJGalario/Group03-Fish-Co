@@ -9,30 +9,40 @@ extends Node2D
 ##   â€¢ Shared completion state and progression unlocking
 
 const BUBBLE_TEXTURE := preload("res://assets/generated/ui_bubble.png")
-const CoopFishScript := preload("res://scenes/aquarium_lobby/LobbyFish.gd")
+const CoopFishScript := preload("res://scenes/coop/CoopFish.gd")
+const CoopHUDScene := preload("res://scenes/coop/CoopHUD.tscn")
 
 @export var level_number: int = 1
 @export var level_title: String = "Co-Op Puzzle"
 @export var level_instruction: String = "Work together to solve the puzzle and reach the exit!"
+@export var show_ambient_background: bool = true
 
 var _fish_nodes: Array[CharacterBody2D] = []
 var _is_cleared: bool = false
 var _clear_dialog: CanvasLayer
 
-@onready var hud: CanvasLayer = $HUD
+@onready var hud: CanvasLayer = get_node_or_null("HUD")
 @onready var exit_zone: ExitZone = get_node_or_null("ExitZone")
 
 func _ready() -> void:
 	_build_coop_ambience()
-	_build_hud()
+	_setup_hud()
 	_spawn_coop_players()
 
 	if exit_zone:
 		exit_zone.all_escaped.connect(_on_level_cleared)
 
 func _build_coop_ambience() -> void:
+	# If designer placed their own Background node, respect it and do not override
+	if get_node_or_null("Background") or get_node_or_null("Bg") or get_node_or_null("WaterBackground"):
+		return
+
+	if not show_ambient_background:
+		return
+
 	# Distinct Emerald Lagoon & Bioluminescent Teal background
 	var bg = ColorRect.new()
+	bg.name = "Background"
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	bg.size = Vector2(1920, 1080)
 	bg.color = Color(0.02, 0.16, 0.22, 1.0)
@@ -41,6 +51,7 @@ func _build_coop_ambience() -> void:
 
 	# Ambient Seafoam Bubbles
 	var bubbles_layer = Control.new()
+	bubbles_layer.name = "AmbientBubbles"
 	bubbles_layer.size = Vector2(1920, 1080)
 	bubbles_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bubbles_layer.z_index = -15
@@ -48,85 +59,21 @@ func _build_coop_ambience() -> void:
 	if BUBBLE_TEXTURE:
 		UIHelpers.spawn_bubbles(bubbles_layer, BUBBLE_TEXTURE, 14, Vector2(1920, 1080))
 
-func _build_hud() -> void:
+func _setup_hud() -> void:
 	if not hud:
 		hud = CanvasLayer.new()
+		hud.name = "HUD"
 		hud.layer = 50
 		add_child(hud)
 
-	var margin = MarginContainer.new()
-	margin.set_anchors_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left", 36)
-	margin.add_theme_constant_override("margin_top", 24)
-	margin.add_theme_constant_override("margin_right", 36)
-	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hud.add_child(margin)
+	var coop_hud = hud.get_node_or_null("CoopHUD") as CoopHUD
+	if not coop_hud:
+		coop_hud = CoopHUDScene.instantiate()
+		hud.add_child(coop_hud)
 
-	var top_bar = HBoxContainer.new()
-	top_bar.alignment = BoxContainer.ALIGNMENT_BEGIN
-	top_bar.add_theme_constant_override("separation", 24)
-	margin.add_child(top_bar)
-
-	# Co-op Mode Banner Badge
-	var mode_chip = PanelContainer.new()
-	var mode_sb = StyleBoxFlat.new()
-	mode_sb.bg_color = Color(0.05, 0.35, 0.32, 0.85)
-	mode_sb.border_width_left = 2
-	mode_sb.border_width_top = 2
-	mode_sb.border_width_right = 2
-	mode_sb.border_width_bottom = 2
-	mode_sb.border_color = Color(0.3, 0.95, 0.8, 0.6)
-	mode_sb.corner_radius_top_left = 10
-	mode_sb.corner_radius_top_right = 10
-	mode_sb.corner_radius_bottom_left = 10
-	mode_sb.corner_radius_bottom_right = 10
-	mode_sb.content_margin_left = 16
-	mode_sb.content_margin_right = 16
-	mode_sb.content_margin_top = 8
-	mode_sb.content_margin_bottom = 8
-	mode_chip.add_theme_stylebox_override("panel", mode_sb)
-	top_bar.add_child(mode_chip)
-
-	var mode_lbl = Label.new()
-	mode_lbl.text = "ðŸŒ¿ CO-OP PUZZLE EXPEDITION"
-	mode_lbl.add_theme_font_size_override("font_size", 18)
-	mode_lbl.add_theme_color_override("font_color", Color(0.4, 1.0, 0.85))
-	mode_chip.add_child(mode_lbl)
-
-	# Title & Instructions
-	var title_vbox = VBoxContainer.new()
-	title_vbox.add_theme_constant_override("separation", 2)
-	top_bar.add_child(title_vbox)
-
-	var title_lbl = Label.new()
-	title_lbl.text = "LEVEL %d: %s" % [level_number, level_title.to_upper()]
-	title_lbl.add_theme_font_size_override("font_size", 28)
-	title_lbl.add_theme_color_override("font_color", Color(0.95, 0.98, 1.0))
-	title_vbox.add_child(title_lbl)
-
-	var instr_lbl = Label.new()
-	instr_lbl.text = level_instruction
-	instr_lbl.add_theme_font_size_override("font_size", 16)
-	instr_lbl.add_theme_color_override("font_color", Color(0.7, 0.9, 0.95, 0.85))
-	title_vbox.add_child(instr_lbl)
-
-	# Spacer
-	var spacer = Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	top_bar.add_child(spacer)
-
-	# Top Right Buttons
-	var restart_btn = Button.new()
-	restart_btn.text = "âŸ³ Restart"
-	restart_btn.custom_minimum_size = Vector2(130, 44)
-	restart_btn.pressed.connect(_on_restart_pressed)
-	top_bar.add_child(restart_btn)
-
-	var exit_btn = Button.new()
-	exit_btn.text = "â—€ Levels"
-	exit_btn.custom_minimum_size = Vector2(120, 44)
-	exit_btn.pressed.connect(_on_exit_pressed)
-	top_bar.add_child(exit_btn)
+	coop_hud.setup_level_info(level_number, level_title, level_instruction)
+	coop_hud.restart_requested.connect(_on_restart_pressed)
+	coop_hud.levels_requested.connect(_on_exit_pressed)
 
 func _spawn_coop_players() -> void:
 	var spawn_parent = get_node_or_null("SpawnPoints")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://csyncswarm04"]
+[gd_scene load_steps=11 format=3 uid="uid://csyncswarm04"]
 
 [ext_resource type="Script" path="res://scenes/coop/levels/Level4.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/PressurePlate.tscn" id="2_plate"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/PushPearl.tscn" id="4_pearl"]
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/ClamSocket.tscn" id="5_socket"]
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/ExitZone.tscn" id="6_exit"]
+[ext_resource type="PackedScene" path="res://scenes/coop/CoopHUD.tscn" id="7_hud"]
 
 [sub_resource type="RectangleShape2D" id="wall_top"]
 size = Vector2(1800, 50)
@@ -39,6 +40,8 @@ level_instruction = "Synchronize buttons simultaneously, then push the pearl to 
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 50
+
+[node name="CoopHUD" parent="HUD" instance=ExtResource("7_hud")]
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 

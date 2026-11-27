@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://coophud001"]
+
+[ext_resource type="Script" path="res://scenes/coop/CoopHUD.gd" id="1_hud"]
+
+[node name="CoopHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 36.0
+offset_top = 16.0
+offset_right = -36.0
+offset_bottom = 76.0
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("1_hud")
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="TitleVBox" type="VBoxContainer" parent="TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="TitleLabel" type="Label" parent="TopBar/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.98, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "LEVEL 1: FIRST SPLASH"
+
+[node name="InstructionLabel" type="Label" parent="TopBar/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.9, 0.95, 0.88)
+theme_override_font_sizes/font_size = 14
+text = "Step on the coral plates to open the gates for your partner!"
+
+[node name="ButtonsRow" type="HBoxContainer" parent="TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RestartButton" type="Button" parent="TopBar/ButtonsRow"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Restart"
+
+[node name="LevelsButton" type="Button" parent="TopBar/ButtonsRow"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Levels"
