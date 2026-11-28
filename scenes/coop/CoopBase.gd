@@ -174,7 +174,7 @@ func _show_clear_overlay() -> void:
 	panel.add_child(vbox)
 
 	var star_lbl = Label.new()
-	star_lbl.text = "â˜… â˜… â˜…"
+	star_lbl.text = "FishTastic Performance!"
 	star_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	star_lbl.add_theme_font_size_override("font_size", 34)
 	star_lbl.add_theme_color_override("font_color", Color(1.0, 0.88, 0.3))
@@ -206,7 +206,7 @@ func _show_clear_overlay() -> void:
 	btn_row.add_child(menu_btn)
 
 	var next_btn = Button.new()
-	next_btn.text = "Next Level â–¶"
+	next_btn.text = "Next Level"
 	next_btn.custom_minimum_size = Vector2(180, 52)
 	next_btn.pressed.connect(_on_next_level_pressed)
 	btn_row.add_child(next_btn)

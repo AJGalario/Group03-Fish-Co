@@ -11,6 +11,7 @@ extends CoopBase
 @onready var plate_2: PressurePlate = $Plate2
 @onready var plate_2_b: PressurePlate = get_node_or_null("Plate2_B")
 @onready var plate_3: PressurePlate = get_node_or_null("Plate3")
+@onready var plate_3_b: PressurePlate = get_node_or_null("Plate3_B")
 @onready var gate_1: CoralGate = $Gate1
 @onready var gate_2: CoralGate = $Gate2
 
@@ -52,6 +53,9 @@ func _ready() -> void:
 	if plate_3:
 		plate_3.activated.connect(_update_gates)
 		plate_3.deactivated.connect(_update_gates)
+	if plate_3_b:
+		plate_3_b.activated.connect(_update_gates)
+		plate_3_b.deactivated.connect(_update_gates)
 
 	# Ensure gates start closed
 	if gate_1:
@@ -111,8 +115,8 @@ func _check_gate_2() -> void:
 	else:
 		chamber_2_ready = (plate_2 != null and plate_2.is_pressed) and (plate_2_b != null and plate_2_b.is_pressed)
 
-	# Chamber 3 plate: Plate 3 activates the 2nd gate ONLY!
-	var chamber_3_ready := (plate_3 != null and plate_3.is_pressed)
+	# Chamber 3 plate: Plate 3 (and 3_B if placed) activates the 2nd gate ONLY!
+	var chamber_3_ready := (plate_3 != null and plate_3.is_pressed) or (plate_3_b != null and plate_3_b.is_pressed)
 
 	if chamber_2_ready or chamber_3_ready:
 		gate_2.open_gate()

@@ -174,6 +174,13 @@ collision_layer = 3
 collision_mask = 3
 plate_color = Color(0.95, 0.6, 0.2, 1)
 
+[node name="Plate3_B" parent="." unique_id=714619269 instance=ExtResource("2_plate")]
+position = Vector2(1338, 302)
+rotation = 1.5707964
+collision_layer = 3
+collision_mask = 3
+plate_color = Color(0.95, 0.6, 0.2, 1)
+
 [node name="Gate2" parent="." unique_id=1026469744 instance=ExtResource("3_gate")]
 position = Vector2(1300, 570)
 open_offset = Vector2(0, -220)
@@ -181,3 +188,5 @@ gate_size = Vector2(38, 300)
 
 [node name="ExitZone" parent="." unique_id=184679503 instance=ExtResource("4_exit")]
 position = Vector2(1574, 603)
+collision_layer = 3
+collision_mask = 3
