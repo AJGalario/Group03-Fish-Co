@@ -33,9 +33,6 @@ level_instruction = "Step on the coral plates to open the gates for your partner
 layer = 50
 
 [node name="CoopHUD" parent="HUD" unique_id=722838590 instance=ExtResource("5_hud")]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
 offset_bottom = 0.0
 
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=831724178]
@@ -144,11 +141,13 @@ color = Color(0.06, 0.22, 0.3, 0.9)
 
 [node name="Plate1" parent="." unique_id=1230984222 instance=ExtResource("2_plate")]
 position = Vector2(480, 995)
-plate_color = Color(0.2, 0.85, 0.95, 1)
+collision_layer = 3
+collision_mask = 3
 
-[node name="Plate1_B" parent="." instance=ExtResource("2_plate")]
+[node name="Plate1_B" parent="." unique_id=486611960 instance=ExtResource("2_plate")]
 position = Vector2(280, 995)
-plate_color = Color(0.2, 0.85, 0.95, 1)
+collision_layer = 3
+collision_mask = 3
 
 [node name="Gate1" parent="." unique_id=1592351961 instance=ExtResource("3_gate")]
 position = Vector2(720, 570)
@@ -157,10 +156,22 @@ gate_size = Vector2(38, 300)
 
 [node name="Plate2" parent="." unique_id=2141465180 instance=ExtResource("2_plate")]
 position = Vector2(1000, 995)
+collision_layer = 3
+collision_mask = 3
 plate_color = Color(0.95, 0.6, 0.2, 1)
 
-[node name="Plate2_B" parent="." instance=ExtResource("2_plate")]
-position = Vector2(1180, 995)
+[node name="Plate2_B" parent="." unique_id=2127471621 instance=ExtResource("2_plate")]
+position = Vector2(1003, 127)
+rotation = 3.1415927
+collision_layer = 3
+collision_mask = 3
+plate_color = Color(0.95, 0.6, 0.2, 1)
+
+[node name="Plate3" parent="." unique_id=1443364701 instance=ExtResource("2_plate")]
+position = Vector2(1800, 951)
+rotation = -1.5707964
+collision_layer = 3
+collision_mask = 3
 plate_color = Color(0.95, 0.6, 0.2, 1)
 
 [node name="Gate2" parent="." unique_id=1026469744 instance=ExtResource("3_gate")]
@@ -169,4 +180,4 @@ open_offset = Vector2(0, -220)
 gate_size = Vector2(38, 300)
 
 [node name="ExitZone" parent="." unique_id=184679503 instance=ExtResource("4_exit")]
-position = Vector2(1600, 980)
+position = Vector2(1574, 603)
