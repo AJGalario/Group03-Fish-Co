@@ -61,8 +61,28 @@ func _build_visuals() -> void:
 	_name_label.add_theme_color_override("font_color", player_color.lerp(Color.WHITE, 0.65))
 	add_child(_name_label)
 
+var is_stunned: bool = false
+var _stun_timer: float = 0.0
+
+func stun(duration: float = 1.0, knockback: Vector2 = Vector2.ZERO) -> void:
+	if is_stunned:
+		return
+	is_stunned = true
+	_stun_timer = duration
+	if knockback != Vector2.ZERO:
+		velocity = knockback
+	if _sprite:
+		var tw := create_tween()
+		tw.tween_property(_sprite, "modulate", Color(1.0, 0.35, 0.35, 0.8), 0.1)
+		tw.tween_property(_sprite, "modulate", player_color.lerp(Color.WHITE, 0.35), duration - 0.1)
+
 func _physics_process(delta: float) -> void:
-	if is_bot:
+	if is_stunned:
+		_stun_timer -= delta
+		velocity = velocity.lerp(Vector2.ZERO, 5.0 * delta)
+		if _stun_timer <= 0.0:
+			is_stunned = false
+	elif is_bot:
 		_process_bot(delta)
 	else:
 		_process_human(delta)

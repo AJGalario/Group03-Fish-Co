@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://coop_elem_squid"]
+
+[ext_resource type="Script" path="res://scenes/coop/elements/CoopEnemy.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/octopus-jellyfish-shark-and-turtle-free-sprite-pixel-art/1/Walk.png" id="2_walk"]
+[ext_resource type="Texture2D" path="res://assets/octopus-jellyfish-shark-and-turtle-free-sprite-pixel-art/1/Attack.png" id="3_attack"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_squid"]
+radius = 28.0
+
+[node name="SquidEnemy" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+enemy_name = "Squid"
+patrol_axis = "vertical"
+patrol_distance = 280.0
+move_speed = 100.0
+walk_texture = ExtResource("2_walk")
+attack_texture = ExtResource("3_attack")
+frame_count = 4
+animation_fps = 6.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2.2, 2.2)
+texture = ExtResource("2_walk")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_squid")
