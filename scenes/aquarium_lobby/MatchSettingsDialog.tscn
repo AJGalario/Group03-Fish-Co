@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dmcfgmodal123"]
 
-[ext_resource type="Script" path="res://scenes/aquarium_lobby/MatchSettingsDialog.gd" id="1_dialog"]
+[ext_resource type="Script" uid="uid://d3i0fpipkcx7i" path="res://scenes/aquarium_lobby/MatchSettingsDialog.gd" id="1_dialog"]
 
-[node name="MatchSettingsDialog" type="Control"]
+[node name="MatchSettingsDialog" type="Control" unique_id=366776090]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,16 +11,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dialog")
 
-[node name="DimOverlay" type="ColorRect" parent="."]
+[node name="DimOverlay" type="ColorRect" parent="." unique_id=1455474624]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.65)
+color = Color(0.15294118, 0.15294118, 0.15294118, 0)
 
-[node name="Panel" type="PanelContainer" parent="."]
+[node name="Panel" type="PanelContainer" parent="." unique_id=644594433]
+self_modulate = Color(0.38786295, 0.48927486, 1, 1)
 custom_minimum_size = Vector2(850, 700)
 layout_mode = 1
 anchors_preset = 8
@@ -35,51 +36,51 @@ offset_bottom = 350.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Margin" type="MarginContainer" parent="Panel"]
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=929095200]
 layout_mode = 2
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 30
 
-[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin" unique_id=88716841]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Header" type="Label" parent="Panel/Margin/VBox"]
+[node name="Header" type="Label" parent="Panel/Margin/VBox" unique_id=1800317057]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "⚙️ MATCH CONFIGURATIONS"
 horizontal_alignment = 1
 
-[node name="HSeparator1" type="HSeparator" parent="Panel/Margin/VBox"]
+[node name="HSeparator1" type="HSeparator" parent="Panel/Margin/VBox" unique_id=1325746347]
 layout_mode = 2
 
-[node name="Grid" type="GridContainer" parent="Panel/Margin/VBox"]
+[node name="Grid" type="GridContainer" parent="Panel/Margin/VBox" unique_id=1744859468]
 layout_mode = 2
 theme_override_constants/h_separation = 24
 theme_override_constants/v_separation = 16
 columns = 2
 
-[node name="BGLabel" type="Label" parent="Panel/Margin/VBox/Grid"]
+[node name="BGLabel" type="Label" parent="Panel/Margin/VBox/Grid" unique_id=538116205]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Background Theme:"
 
-[node name="BGOption" type="OptionButton" parent="Panel/Margin/VBox/Grid"]
+[node name="BGOption" type="OptionButton" parent="Panel/Margin/VBox/Grid" unique_id=576726474]
 custom_minimum_size = Vector2(300, 45)
 layout_mode = 2
 
-[node name="TimeLabel" type="Label" parent="Panel/Margin/VBox/Grid"]
+[node name="TimeLabel" type="Label" parent="Panel/Margin/VBox/Grid" unique_id=1405789901]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Minigame Duration:"
 
-[node name="TimeBox" type="HBoxContainer" parent="Panel/Margin/VBox/Grid"]
+[node name="TimeBox" type="HBoxContainer" parent="Panel/Margin/VBox/Grid" unique_id=1694788276]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="TimeSlider" type="HSlider" parent="Panel/Margin/VBox/Grid/TimeBox"]
+[node name="TimeSlider" type="HSlider" parent="Panel/Margin/VBox/Grid/TimeBox" unique_id=1978290471]
 custom_minimum_size = Vector2(200, 30)
 layout_mode = 2
 size_flags_vertical = 4
@@ -88,86 +89,86 @@ max_value = 60.0
 step = 5.0
 value = 30.0
 
-[node name="TimeValueLabel" type="Label" parent="Panel/Margin/VBox/Grid/TimeBox"]
+[node name="TimeValueLabel" type="Label" parent="Panel/Margin/VBox/Grid/TimeBox" unique_id=1553098958]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "30 sec"
 
-[node name="BotCountLabel" type="Label" parent="Panel/Margin/VBox/Grid"]
+[node name="BotCountLabel" type="Label" parent="Panel/Margin/VBox/Grid" unique_id=1899137414]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Bot Count:"
 
-[node name="BotCountOption" type="OptionButton" parent="Panel/Margin/VBox/Grid"]
+[node name="BotCountOption" type="OptionButton" parent="Panel/Margin/VBox/Grid" unique_id=20578976]
 custom_minimum_size = Vector2(300, 45)
 layout_mode = 2
 
-[node name="BotDiffLabel" type="Label" parent="Panel/Margin/VBox/Grid"]
+[node name="BotDiffLabel" type="Label" parent="Panel/Margin/VBox/Grid" unique_id=228101606]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Bot Difficulty:"
 
-[node name="BotDiffOption" type="OptionButton" parent="Panel/Margin/VBox/Grid"]
+[node name="BotDiffOption" type="OptionButton" parent="Panel/Margin/VBox/Grid" unique_id=1163427886]
 custom_minimum_size = Vector2(300, 45)
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="Panel/Margin/VBox"]
+[node name="HSeparator2" type="HSeparator" parent="Panel/Margin/VBox" unique_id=610200129]
 layout_mode = 2
 
-[node name="MinigamesTitle" type="Label" parent="Panel/Margin/VBox"]
+[node name="MinigamesTitle" type="Label" parent="Panel/Margin/VBox" unique_id=1360363496]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Enabled Minigames Playlist:"
 
-[node name="MinigameBox" type="VBoxContainer" parent="Panel/Margin/VBox"]
+[node name="MinigameBox" type="VBoxContainer" parent="Panel/Margin/VBox" unique_id=2099479850]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="CheckTyping" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox"]
+[node name="CheckTyping" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox" unique_id=1373572630]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Typing Reef Race"
 
-[node name="CheckFlappy" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox"]
+[node name="CheckFlappy" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox" unique_id=2089579071]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Flappy Fish"
 
-[node name="CheckDebris" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox"]
+[node name="CheckDebris" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox" unique_id=1097809357]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Debris Dash"
 
-[node name="CheckPellet" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox"]
+[node name="CheckPellet" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox" unique_id=173823218]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Pellet Frenzy (osu!catch + Slap)"
 
-[node name="CheckLaunch" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox"]
+[node name="CheckLaunch" type="CheckBox" parent="Panel/Margin/VBox/MinigameBox" unique_id=1858314839]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 button_pressed = true
 text = "Pellet Leap (Acrobatic Jump & Catch)"
 
-[node name="HSeparator3" type="HSeparator" parent="Panel/Margin/VBox"]
+[node name="HSeparator3" type="HSeparator" parent="Panel/Margin/VBox" unique_id=328408319]
 layout_mode = 2
 
-[node name="ButtonRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
+[node name="ButtonRow" type="HBoxContainer" parent="Panel/Margin/VBox" unique_id=1534208602]
 layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="SaveBtn" type="Button" parent="Panel/Margin/VBox/ButtonRow"]
+[node name="SaveBtn" type="Button" parent="Panel/Margin/VBox/ButtonRow" unique_id=1364333674]
 custom_minimum_size = Vector2(220, 55)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "💾 Save Changes"
 
-[node name="DiscardBtn" type="Button" parent="Panel/Margin/VBox/ButtonRow"]
+[node name="DiscardBtn" type="Button" parent="Panel/Margin/VBox/ButtonRow" unique_id=833468487]
 custom_minimum_size = Vector2(220, 55)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22

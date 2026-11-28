@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cb54vyh3qm541"]
+[gd_scene format=3 uid="uid://cb54vyh3qm541"]
 
-[ext_resource type="Script" path="res://scenes/main_menu/MainMenu.gd" id="1_menu"]
-[ext_resource type="Theme" path="res://ui/theme/FishCoTheme.tres" id="2_theme"]
+[ext_resource type="Script" uid="uid://coq7yr31xpayj" path="res://scenes/main_menu/MainMenu.gd" id="1_menu"]
+[ext_resource type="Theme" uid="uid://dsn3b1ay21xmr" path="res://ui/theme/FishCoTheme.tres" id="2_theme"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=513475656]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

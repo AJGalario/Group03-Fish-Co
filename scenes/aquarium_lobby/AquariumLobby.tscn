@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6543bnhy8765"]
+[gd_scene format=3 uid="uid://c6543bnhy8765"]
 
-[ext_resource type="Script" path="res://scenes/aquarium_lobby/AquariumLobby.gd" id="1_lobby"]
-[ext_resource type="PackedScene" path="res://scenes/aquarium_lobby/MatchSettingsDialog.tscn" id="2_settings"]
-[ext_resource type="Theme" path="res://ui/theme/FishCoTheme.tres" id="3_theme"]
+[ext_resource type="Script" uid="uid://bnlfotblyetl8" path="res://scenes/aquarium_lobby/AquariumLobby.gd" id="1_lobby"]
+[ext_resource type="PackedScene" uid="uid://dmcfgmodal123" path="res://scenes/aquarium_lobby/MatchSettingsDialog.tscn" id="2_settings"]
+[ext_resource type="Theme" uid="uid://dsn3b1ay21xmr" path="res://ui/theme/FishCoTheme.tres" id="3_theme"]
 
-[node name="AquariumLobby" type="Control"]
+[node name="AquariumLobby" type="Control" unique_id=905662787]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,21 +14,20 @@ grow_vertical = 2
 theme = ExtResource("3_theme")
 script = ExtResource("1_lobby")
 
-[node name="FishContainer" type="Node2D" parent="."]
+[node name="FishContainer" type="Node2D" parent="." unique_id=718744732]
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=998539672]
 
-[node name="BackBtn" type="Button" parent="HUD"]
+[node name="BackBtn" type="Button" parent="HUD" unique_id=54803334]
 custom_minimum_size = Vector2(160, 52)
 offset_left = 40.0
 offset_top = 35.0
 offset_right = 200.0
 offset_bottom = 87.0
 theme = ExtResource("3_theme")
-text = "â—€ Back"
+text = "Leave Aquarium"
 
-[node name="TopBar" type="VBoxContainer" parent="HUD"]
-theme = ExtResource("3_theme")
+[node name="TopBar" type="VBoxContainer" parent="HUD" unique_id=1252225423]
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 220.0
@@ -36,22 +35,22 @@ offset_top = 30.0
 offset_right = -220.0
 offset_bottom = 150.0
 grow_horizontal = 2
+theme = ExtResource("3_theme")
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="HUD/TopBar"]
+[node name="Title" type="Label" parent="HUD/TopBar" unique_id=1251588571]
 layout_mode = 2
 theme_override_font_sizes/font_size = 52
 text = "THE AQUARIUM TANK"
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="HUD/TopBar"]
+[node name="StatusLabel" type="Label" parent="HUD/TopBar" unique_id=2085992025]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "2 fish ready"
 horizontal_alignment = 1
 
-[node name="BottomBar" type="HBoxContainer" parent="HUD"]
-theme = ExtResource("3_theme")
+[node name="BottomBar" type="HBoxContainer" parent="HUD" unique_id=1671551008]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -62,35 +61,36 @@ offset_right = -180.0
 offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("3_theme")
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="DropFishBtn" type="Button" parent="HUD/BottomBar"]
+[node name="DropFishBtn" type="Button" parent="HUD/BottomBar" unique_id=959765833]
 custom_minimum_size = Vector2(270, 64)
 layout_mode = 2
 text = "Drop fish (Add player)"
 
-[node name="SettingsBtn" type="Button" parent="HUD/BottomBar"]
+[node name="SettingsBtn" type="Button" parent="HUD/BottomBar" unique_id=1744846764]
 custom_minimum_size = Vector2(230, 64)
 layout_mode = 2
 text = "Match Settings"
 
-[node name="VsBtn" type="Button" parent="HUD/BottomBar"]
+[node name="VsBtn" type="Button" parent="HUD/BottomBar" unique_id=1434541434]
 custom_minimum_size = Vector2(280, 72)
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "PLAY VS MODE"
 
-[node name="CoopBtn" type="Button" parent="HUD/BottomBar"]
+[node name="CoopBtn" type="Button" parent="HUD/BottomBar" unique_id=971309789]
 custom_minimum_size = Vector2(250, 64)
 layout_mode = 2
 text = "Play Co-Op Mode"
 
-[node name="LeaveDialogLayer" type="CanvasLayer" parent="."]
+[node name="LeaveDialogLayer" type="CanvasLayer" parent="." unique_id=1123616527]
 layer = 20
 visible = false
 
-[node name="Backdrop" type="ColorRect" parent="LeaveDialogLayer"]
+[node name="Backdrop" type="ColorRect" parent="LeaveDialogLayer" unique_id=430541651]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -98,7 +98,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.02, 0.06, 0.12, 0.75)
 
-[node name="DialogBox" type="PanelContainer" parent="LeaveDialogLayer"]
+[node name="DialogBox" type="PanelContainer" parent="LeaveDialogLayer" unique_id=334380879]
 custom_minimum_size = Vector2(520, 260)
 anchors_preset = 8
 anchor_left = 0.5
@@ -113,41 +113,41 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_theme")
 
-[node name="VBox" type="VBoxContainer" parent="LeaveDialogLayer/DialogBox"]
+[node name="VBox" type="VBoxContainer" parent="LeaveDialogLayer/DialogBox" unique_id=1041859911]
 layout_mode = 2
 theme_override_constants/separation = 22
 alignment = 1
 
-[node name="Title" type="Label" parent="LeaveDialogLayer/DialogBox/VBox"]
+[node name="Title" type="Label" parent="LeaveDialogLayer/DialogBox/VBox" unique_id=1229973710]
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Leave Aquarium?"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="LeaveDialogLayer/DialogBox/VBox"]
+[node name="Subtitle" type="Label" parent="LeaveDialogLayer/DialogBox/VBox" unique_id=1283704431]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.75, 0.88, 1, 0.9)
+theme_override_font_sizes/font_size = 20
 text = "Return to the main title screen?"
 horizontal_alignment = 1
 
-[node name="Buttons" type="HBoxContainer" parent="LeaveDialogLayer/DialogBox/VBox"]
+[node name="Buttons" type="HBoxContainer" parent="LeaveDialogLayer/DialogBox/VBox" unique_id=1656822069]
 layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="StayBtn" type="Button" parent="LeaveDialogLayer/DialogBox/VBox/Buttons"]
+[node name="StayBtn" type="Button" parent="LeaveDialogLayer/DialogBox/VBox/Buttons" unique_id=1315634473]
 custom_minimum_size = Vector2(180, 56)
 layout_mode = 2
 text = "Stay in Tank"
 
-[node name="LeaveBtn" type="Button" parent="LeaveDialogLayer/DialogBox/VBox/Buttons"]
+[node name="LeaveBtn" type="Button" parent="LeaveDialogLayer/DialogBox/VBox/Buttons" unique_id=2012844658]
 custom_minimum_size = Vector2(160, 56)
 layout_mode = 2
 text = "Leave"
 
-[node name="SettingsLayer" type="CanvasLayer" parent="."]
+[node name="SettingsLayer" type="CanvasLayer" parent="." unique_id=452996124]
 layer = 10
 
-[node name="MatchSettingsDialog" parent="SettingsLayer" instance=ExtResource("2_settings")]
+[node name="MatchSettingsDialog" parent="SettingsLayer" unique_id=456084407 instance=ExtResource("2_settings")]
 visible = false

@@ -11,17 +11,17 @@ const BUBBLE_TEXTURE := preload("res://assets/generated/ui_bubble.png")
 
 const FISH_FACTS : Array[String] = [
 	"Flying fish have wing-like pectoral fins that let them glide over 600 feet across open ocean to escape predators!",
-	"Channel catfish have taste buds all over their entire body â€” they can taste food just by touching it with their skin!",
+	"Channel catfish have taste buds all over their entire body that they can taste food just by touching it with their skin!",
 	"Almost all fish sleep with their eyes wide open because they don't have eyelids (except for sharks)!",
-	"Fish have been swimming on Earth for over 500 million years â€” long before dinosaurs ever walked the land!",
+	"Fish have been swimming on Earth for over 500 million years, long before dinosaurs ever walked the land!",
 	"Mudskippers can walk on land using their pectoral fins and breathe air directly through their skin!",
 	"Most fish only swim forward, but triggerfish can swim forwards, backwards, and upside down with ease!",
 	"Archerfish shoot high-pressure water jets from their mouths to snipe insects off branches up to 5 feet away!",
 	"Clownfish coat themselves in a special mucus shield so that stinging sea anemones don't hurt them!",
 	"Sailfish are the fastest fish in the sea, clocking sprint speeds of up to 68 mph (110 km/h)!",
 	"Pufferfish inflate their bodies with water or air, blowing up to three times their normal size to scare predators!",
-	"Goldfish have a memory span of several months â€” completely busting the old 3-second memory myth!",
-	"Electric eels can generate electrical shocks of up to 860 volts â€” enough power to stun a horse!",
+	"Goldfish have a memory span of several monthsm completely busting the old 3-second memory myth!",
+	"Electric eels can generate electrical shocks of up to 860 volts, enough power to stun a horse!",
 	"Parrotfish secrete a cozy sleeping bag made of mucus every night to mask their scent from hungry moray eels!",
 	"Deep-sea anglerfish carry a bioluminescent glowing lure in front of their mouths to attract curious prey in the dark!",
 	"Coelacanths were thought to have gone extinct alongside the dinosaurs until a live one was found in 1938!",
@@ -212,7 +212,7 @@ func _build_ui() -> void:
 	trivia_panel.add_child(trivia_vbox)
 
 	var header_lbl = Label.new()
-	header_lbl.text = "ðŸ’¡ DID YOU KNOW?"
+	header_lbl.text = "DID YOU KNOW?"
 	header_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	header_lbl.add_theme_font_size_override("font_size", 16)
 	header_lbl.add_theme_color_override("font_color", Color(1.0, 0.82, 0.25))
