@@ -61,31 +61,39 @@ func _ready() -> void:
 		hud_ref.setup_level_info(level_number, level_title, level_instruction)
 
 func _check_gate_1() -> void:
-	if not gate_1 or gate_1.is_open:
+	if not gate_1:
 		return
 	var p_count := maxi(2, GameManager.players.size())
-	var ready_1 := false
-
+	var chamber_1_ready := false
 	if p_count <= 2:
-		ready_1 = plate_1 and plate_1.is_pressed
+		chamber_1_ready = plate_1 != null and plate_1.is_pressed
 	else:
-		# 3+ players: both Plate 1 and Plate 1B must be pressed simultaneously!
-		ready_1 = (plate_1 and plate_1.is_pressed) and (plate_1_b and plate_1_b.is_pressed)
+		chamber_1_ready = (plate_1 != null and plate_1.is_pressed) and (plate_1_b != null and plate_1_b.is_pressed)
 
-	if ready_1:
+	var chamber_2_ready := false
+	if p_count < 4:
+		chamber_2_ready = plate_2 != null and plate_2.is_pressed
+	else:
+		chamber_2_ready = (plate_2 != null and plate_2.is_pressed) and (plate_2_b != null and plate_2_b.is_pressed)
+
+	if chamber_1_ready or chamber_2_ready:
 		gate_1.open_gate()
+	else:
+		gate_1.close_gate()
 
 func _check_gate_2() -> void:
-	if not gate_2 or gate_2.is_open:
+	if not gate_2:
 		return
 	var p_count := maxi(2, GameManager.players.size())
-	var ready_2 := false
-
+	var chamber_2_ready := false
 	if p_count < 4:
-		ready_2 = plate_2 and plate_2.is_pressed
+		chamber_2_ready = plate_2 != null and plate_2.is_pressed
 	else:
-		# 4 players: both Plate 2 and Plate 2B must be pressed simultaneously!
-		ready_2 = (plate_2 and plate_2.is_pressed) and (plate_2_b and plate_2_b.is_pressed)
+		chamber_2_ready = (plate_2 != null and plate_2.is_pressed) and (plate_2_b != null and plate_2_b.is_pressed)
 
-	if ready_2:
+	if chamber_2_ready:
 		gate_2.open_gate()
+	else:
+		gate_2.close_gate()
+
+	_check_gate_1()

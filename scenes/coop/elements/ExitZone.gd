@@ -12,10 +12,10 @@ var _is_triggered: bool = false
 @onready var _glow_ring: ColorRect = $GlowRing
 
 func _ready() -> void:
-	collision_layer = 3
-	collision_mask = 3
+	collision_layer = 0
+	collision_mask = 2  # Monitors Layer 2: Fish
 	monitoring = true
-	monitorable = true
+	monitorable = false
 
 	if required_players <= 0:
 		required_players = maxi(1, GameManager.players.size())
@@ -31,7 +31,7 @@ func _ready() -> void:
 		tw.tween_property(_glow_ring, "scale", Vector2(1.0, 1.0), 0.8).set_trans(Tween.TRANS_SINE)
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("fish") or body is CharacterBody2D:
+	if body.is_in_group("fish"):
 		if not _occupants.has(body):
 			_occupants.append(body)
 		_check_exit()

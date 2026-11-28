@@ -11,44 +11,61 @@ signal state_changed(is_open: bool)
 
 var is_open: bool = false
 var _closed_pos: Vector2
+var _tween: Tween
 
 @onready var _col_shape: CollisionShape2D = $CollisionShape2D
 @onready var _rect: ColorRect = $GateRect
 @onready var _trim_rect: ColorRect = $TrimRect
 
 func _ready() -> void:
+	collision_layer = 1
+	collision_mask = 0
 	_closed_pos = position
-	# Apply exported colors/sizes to editor nodes
+	is_open = false
+
+	# Apply exported colors/sizes cleanly without corrupting other gates
 	if _rect:
 		_rect.color = gate_color
-		_rect.size = gate_size
-		_rect.position = -gate_size * 0.5
+		_rect.offset_left = -gate_size.x * 0.5
+		_rect.offset_right = gate_size.x * 0.5
+		_rect.offset_top = -gate_size.y * 0.5
+		_rect.offset_bottom = gate_size.y * 0.5
 	if _trim_rect:
-		_trim_rect.size = Vector2(4, gate_size.y)
-		_trim_rect.position = Vector2(-2, -gate_size.y * 0.5)
+		_trim_rect.offset_left = -2.0
+		_trim_rect.offset_right = 2.0
+		_trim_rect.offset_top = -gate_size.y * 0.5
+		_trim_rect.offset_bottom = gate_size.y * 0.5
 	if _col_shape and _col_shape.shape is RectangleShape2D:
-		(_col_shape.shape as RectangleShape2D).size = gate_size
+		var r_shape := _col_shape.shape as RectangleShape2D
+		if r_shape.size != gate_size:
+			var unique_shape := r_shape.duplicate() as RectangleShape2D
+			unique_shape.size = gate_size
+			_col_shape.shape = unique_shape
 
 func open_gate() -> void:
 	if is_open:
 		return
 	is_open = true
-	var tw := create_tween()
-	tw.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tw.tween_property(self, "position", _closed_pos + open_offset, slide_duration)
+	if _tween and _tween.is_valid():
+		_tween.kill()
+	_tween = create_tween()
+	_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_tween.tween_property(self, "position", _closed_pos + open_offset, slide_duration)
 	if _rect:
-		tw.parallel().tween_property(_rect, "modulate:a", 0.45, slide_duration)
+		_tween.parallel().tween_property(_rect, "modulate:a", 0.45, slide_duration)
 	state_changed.emit(true)
 
 func close_gate() -> void:
 	if not is_open:
 		return
 	is_open = false
-	var tw := create_tween()
-	tw.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	tw.tween_property(self, "position", _closed_pos, slide_duration)
+	if _tween and _tween.is_valid():
+		_tween.kill()
+	_tween = create_tween()
+	_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	_tween.tween_property(self, "position", _closed_pos, slide_duration)
 	if _rect:
-		tw.parallel().tween_property(_rect, "modulate:a", 1.0, slide_duration)
+		_tween.parallel().tween_property(_rect, "modulate:a", 1.0, slide_duration)
 	state_changed.emit(false)
 
 func toggle_gate() -> void:

@@ -18,15 +18,15 @@ var _occupants: Array[Node2D] = []
 @onready var _indicator_label: Label = $CountLabel
 
 func _ready() -> void:
-	collision_layer = 3
-	collision_mask = 3
+	# Only monitor layer 2 (Fish). Do NOT monitor layer 1 (Walls/Floor).
+	collision_layer = 0
+	collision_mask = 2
 	monitoring = true
-	monitorable = true
+	monitorable = false
 
 	if require_all_active_players:
 		required_count = maxi(1, GameManager.players.size())
 
-	# Apply exported plate_color to the visuals
 	if _pedal_rect:
 		_pedal_rect.color = plate_color.lerp(Color.WHITE, 0.15)
 
@@ -35,6 +35,8 @@ func _ready() -> void:
 	_update_visual_state()
 
 func _on_body_entered(body: Node2D) -> void:
+	if not body.is_in_group("fish"):
+		return
 	if not _occupants.has(body):
 		_occupants.append(body)
 	_check_state()
@@ -70,9 +72,9 @@ func _animate_press(down: bool) -> void:
 		return
 	var tw := create_tween()
 	var target_y := -3.0 if down else -10.0
-	tw.tween_property(_pedal_rect, "position:y", target_y, 0.15)
+	tw.tween_property(_pedal_rect, "position:y", target_y, 0.12)
 	if _glow_line:
-		tw.parallel().tween_property(_glow_line, "position:y", target_y, 0.15)
+		tw.parallel().tween_property(_glow_line, "position:y", target_y, 0.12)
 
 func _update_visual_state() -> void:
 	var current_count := _occupants.size()

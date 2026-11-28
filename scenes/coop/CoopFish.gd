@@ -25,8 +25,8 @@ const SKIN_ROW_OFFSETS: Array[int] = [0, 16, 32, 48]
 
 func _ready() -> void:
 	add_to_group("fish")
-	collision_layer = 3  # Layers 1 & 2
-	collision_mask = 7   # Layers 1, 2, 3
+	collision_layer = 2  # Layer 2: Fish / Player
+	collision_mask = 5   # Collides with Layer 1 (Walls/Gates) & Layer 3 (PushPearl)
 
 	_input_prefix = "p%d_" % (player_id + 1)
 	_build_visuals()

@@ -25,7 +25,9 @@ func _ready() -> void:
 		clam_socket.socket_activated.connect(func(_id): final_gate.open_gate())
 
 func _check_sync() -> void:
-	if not mid_gate or mid_gate.is_open:
+	if not mid_gate:
 		return
 	if sync_plate_1 and sync_plate_2 and sync_plate_1.is_pressed and sync_plate_2.is_pressed:
 		mid_gate.open_gate()
+	else:
+		mid_gate.close_gate()
