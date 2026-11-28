@@ -25,12 +25,23 @@ var _clear_dialog: CanvasLayer
 @onready var exit_zone: ExitZone = get_node_or_null("ExitZone")
 
 func _ready() -> void:
+	_purge_lobby_leftovers()
 	_build_coop_ambience()
 	_setup_hud()
 	_spawn_coop_players()
 
 	if exit_zone:
 		exit_zone.all_escaped.connect(_on_level_cleared)
+
+## Remove any LobbyFish or old lobby UI nodes that may have leaked into this scene.
+func _purge_lobby_leftovers() -> void:
+	# Kill any LobbyFish that slipped through scene transition
+	for node in get_tree().get_nodes_in_group("lobby_fish"):
+		node.queue_free()
+	# Also remove nodes whose script class is LobbyFish (may not be in group)
+	for node in get_tree().get_root().get_children():
+		if node.get_script() and node.get_script().get_global_name() == "LobbyFish":
+			node.queue_free()
 
 func _build_coop_ambience() -> void:
 	# If designer placed their own Background node, respect it and do not override

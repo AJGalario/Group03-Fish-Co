@@ -9,6 +9,8 @@ radius = 34.0
 radius = 46.0
 
 [node name="PushPearl" type="CharacterBody2D"]
+collision_layer = 3
+collision_mask = 7
 script = ExtResource("1_script")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -29,6 +31,8 @@ offset_bottom = 30.6
 color = Color(0.95, 0.98, 1, 0.95)
 
 [node name="PushArea" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PushArea"]
 shape = SubResource("2_area_shape")

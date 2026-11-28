@@ -18,6 +18,11 @@ var _occupants: Array[Node2D] = []
 @onready var _indicator_label: Label = $CountLabel
 
 func _ready() -> void:
+	collision_layer = 3
+	collision_mask = 3
+	monitoring = true
+	monitorable = true
+
 	if require_all_active_players:
 		required_count = maxi(1, GameManager.players.size())
 

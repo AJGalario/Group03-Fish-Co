@@ -15,9 +15,47 @@ var _pushers: Array[Node2D] = []
 @onready var _push_area: Area2D = $PushArea
 
 func _ready() -> void:
+	collision_layer = 3
+	collision_mask = 7
+
 	if _push_area:
+		_push_area.collision_layer = 3
+		_push_area.collision_mask = 3
 		_push_area.body_entered.connect(_on_pusher_entered)
 		_push_area.body_exited.connect(_on_pusher_exited)
+
+	_build_pusher_label()
+
+var _pusher_label: Label
+
+func _build_pusher_label() -> void:
+	_pusher_label = Label.new()
+	_pusher_label.position = Vector2(-60, -pearl_radius - 28)
+	_pusher_label.custom_minimum_size = Vector2(120, 22)
+	_pusher_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_pusher_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_pusher_label.add_theme_font_size_override("font_size", 13)
+	_pusher_label.add_theme_color_override("font_color", Color(0.9, 0.95, 1.0))
+	add_child(_pusher_label)
+	_update_pusher_ui(0)
+
+func _update_pusher_ui(active_count: int) -> void:
+	if not _pusher_label:
+		return
+	if is_locked:
+		_pusher_label.text = "✓ SLOTTED"
+		_pusher_label.add_theme_color_override("font_color", Color(0.4, 1.0, 0.6))
+		return
+
+	if min_pushers > 1:
+		_pusher_label.visible = true
+		_pusher_label.text = "[ %d / %d 👥 ]" % [mini(active_count, min_pushers), min_pushers]
+		if active_count >= min_pushers:
+			_pusher_label.add_theme_color_override("font_color", Color(0.3, 1.0, 0.6))
+		else:
+			_pusher_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.4))
+	else:
+		_pusher_label.visible = false
 
 func _physics_process(delta: float) -> void:
 	if is_locked:
@@ -35,6 +73,8 @@ func _physics_process(delta: float) -> void:
 				if pusher is CharacterBody2D and pusher.velocity.dot(push_dir) > 0.1:
 					total_push += push_dir * pusher.velocity.length()
 					active_push_count += 1
+
+	_update_pusher_ui(active_push_count)
 
 	if active_push_count >= min_pushers and total_push.length_squared() > 10.0:
 		var speed_boost := 1.0 + (active_push_count - 1) * 0.75

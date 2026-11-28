@@ -146,8 +146,17 @@ gate_size = Vector2(32, 260)
 position = Vector2(750, 460)
 pearl_radius = 42.0
 
+[node name="PushPearl2" parent="." instance=ExtResource("4_pearl")]
+position = Vector2(920, 460)
+pearl_radius = 42.0
+
 [node name="ClamSocket" parent="." instance=ExtResource("5_socket")]
 position = Vector2(1150, 960)
+
+[node name="ClamSocket2" parent="." instance=ExtResource("5_socket")]
+position = Vector2(1330, 960)
+socket_id = "socket_2"
+socket_color = Color(0.95, 0.5, 0.2, 1)
 
 [node name="GateExit" parent="." instance=ExtResource("3_gate")]
 position = Vector2(1470, 640)

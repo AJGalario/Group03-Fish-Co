@@ -11,6 +11,8 @@ var is_activated: bool = false
 @onready var _indicator: ColorRect = $IndicatorRect
 
 func _ready() -> void:
+	collision_layer = 3
+	collision_mask = 3
 	body_entered.connect(_on_body_entered)
 	# Apply socket color to ring visual
 	var ring := get_node_or_null("RingRect")

@@ -1,10 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://clevel1tutorial01"]
+[gd_scene format=3 uid="uid://b0loe0m6a8k2s"]
 
-[ext_resource type="Script" path="res://scenes/coop/levels/Level1.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://c7o82gcikmq8m" path="res://scenes/coop/levels/Level1.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/PressurePlate.tscn" id="2_plate"]
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/CoralGate.tscn" id="3_gate"]
 [ext_resource type="PackedScene" path="res://scenes/coop/elements/ExitZone.tscn" id="4_exit"]
-[ext_resource type="PackedScene" path="res://scenes/coop/CoopHUD.tscn" id="5_hud"]
+[ext_resource type="PackedScene" uid="uid://coophud001" path="res://scenes/coop/CoopHUD.tscn" id="5_hud"]
 
 [sub_resource type="RectangleShape2D" id="wall_top"]
 size = Vector2(1800, 50)
@@ -18,94 +18,155 @@ size = Vector2(40, 1000)
 [sub_resource type="RectangleShape2D" id="wall_right"]
 size = Vector2(40, 1000)
 
-[node name="Level1" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="divider_upper"]
+size = Vector2(40, 370)
+
+[sub_resource type="RectangleShape2D" id="divider_lower"]
+size = Vector2(40, 350)
+
+[node name="Level1" type="Node2D" unique_id=1518846334]
 script = ExtResource("1_script")
-level_number = 1
 level_title = "First Splash"
 level_instruction = "Step on the coral plates to open the gates for your partner!"
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=4226310]
 layer = 50
 
-[node name="CoopHUD" parent="HUD" instance=ExtResource("5_hud")]
+[node name="CoopHUD" parent="HUD" unique_id=722838590 instance=ExtResource("5_hud")]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 
-[node name="SpawnPoints" type="Node2D" parent="."]
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=831724178]
 
-[node name="Spawn1" type="Marker2D" parent="SpawnPoints"]
+[node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1568217663]
 position = Vector2(240, 780)
 
-[node name="Spawn2" type="Marker2D" parent="SpawnPoints"]
+[node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1027027538]
 position = Vector2(340, 780)
 
-[node name="Spawn3" type="Marker2D" parent="SpawnPoints"]
+[node name="Spawn3" type="Marker2D" parent="SpawnPoints" unique_id=1102177807]
 position = Vector2(240, 680)
 
-[node name="Spawn4" type="Marker2D" parent="SpawnPoints"]
+[node name="Spawn4" type="Marker2D" parent="SpawnPoints" unique_id=1482116890]
 position = Vector2(340, 680)
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="." unique_id=690835455]
 
-[node name="TopWall" type="CollisionShape2D" parent="Walls"]
+[node name="TopWall" type="CollisionShape2D" parent="Walls" unique_id=449493080]
 position = Vector2(960, 85)
 shape = SubResource("wall_top")
 
-[node name="TopWallVis" type="ColorRect" parent="Walls"]
+[node name="TopWallVis" type="ColorRect" parent="Walls" unique_id=1723637074]
 offset_left = 60.0
 offset_top = 60.0
 offset_right = 1860.0
 offset_bottom = 110.0
 color = Color(0.06, 0.22, 0.3, 0.9)
 
-[node name="BottomWall" type="CollisionShape2D" parent="Walls"]
+[node name="BottomWall" type="CollisionShape2D" parent="Walls" unique_id=1977130552]
 position = Vector2(960, 1035)
 shape = SubResource("wall_bottom")
 
-[node name="BottomWallVis" type="ColorRect" parent="Walls"]
+[node name="BottomWallVis" type="ColorRect" parent="Walls" unique_id=1460454969]
 offset_left = 60.0
 offset_top = 1010.0
 offset_right = 1860.0
 offset_bottom = 1060.0
 color = Color(0.65, 0.55, 0.35, 1)
 
-[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
+[node name="LeftWall" type="CollisionShape2D" parent="Walls" unique_id=874203679]
 position = Vector2(80, 560)
 shape = SubResource("wall_left")
 
-[node name="LeftWallVis" type="ColorRect" parent="Walls"]
+[node name="LeftWallVis" type="ColorRect" parent="Walls" unique_id=1433558069]
 offset_left = 60.0
 offset_top = 60.0
 offset_right = 100.0
 offset_bottom = 1060.0
 color = Color(0.06, 0.22, 0.3, 0.9)
 
-[node name="RightWall" type="CollisionShape2D" parent="Walls"]
+[node name="RightWall" type="CollisionShape2D" parent="Walls" unique_id=1607239977]
 position = Vector2(1840, 560)
 shape = SubResource("wall_right")
 
-[node name="RightWallVis" type="ColorRect" parent="Walls"]
+[node name="RightWall2" type="CollisionShape2D" parent="Walls" unique_id=49711673]
+position = Vector2(720, 295)
+shape = SubResource("divider_upper")
+
+[node name="RightWall3" type="CollisionShape2D" parent="Walls" unique_id=1974357992]
+position = Vector2(1300, 295)
+shape = SubResource("divider_upper")
+
+[node name="RightWall4" type="CollisionShape2D" parent="Walls" unique_id=1847050650]
+position = Vector2(720, 835)
+shape = SubResource("divider_lower")
+
+[node name="RightWall5" type="CollisionShape2D" parent="Walls" unique_id=585428333]
+position = Vector2(1300, 835)
+shape = SubResource("divider_lower")
+
+[node name="RightWallVis" type="ColorRect" parent="Walls" unique_id=1480257977]
 offset_left = 1820.0
 offset_top = 60.0
 offset_right = 1860.0
 offset_bottom = 1060.0
 color = Color(0.06, 0.22, 0.3, 0.9)
 
-[node name="Plate1" parent="." instance=ExtResource("2_plate")]
-position = Vector2(460, 995)
+[node name="RightWallVis2" type="ColorRect" parent="Walls" unique_id=1827758343]
+offset_left = 1280.0
+offset_top = 110.0
+offset_right = 1320.0
+offset_bottom = 480.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="RightWallVis3" type="ColorRect" parent="Walls" unique_id=920430337]
+offset_left = 700.0
+offset_top = 110.0
+offset_right = 740.0
+offset_bottom = 480.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="RightWallVis4" type="ColorRect" parent="Walls" unique_id=130630889]
+offset_left = 700.0
+offset_top = 660.0
+offset_right = 740.0
+offset_bottom = 1010.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="RightWallVis5" type="ColorRect" parent="Walls" unique_id=1010953971]
+offset_left = 1280.0
+offset_top = 660.0
+offset_right = 1320.0
+offset_bottom = 1010.0
+color = Color(0.06, 0.22, 0.3, 0.9)
+
+[node name="Plate1" parent="." unique_id=1230984222 instance=ExtResource("2_plate")]
+position = Vector2(480, 995)
 plate_color = Color(0.2, 0.85, 0.95, 1)
 
-[node name="Gate1" parent="." instance=ExtResource("3_gate")]
+[node name="Plate1_B" parent="." instance=ExtResource("2_plate")]
+position = Vector2(280, 995)
+plate_color = Color(0.2, 0.85, 0.95, 1)
+
+[node name="Gate1" parent="." unique_id=1592351961 instance=ExtResource("3_gate")]
 position = Vector2(720, 570)
 open_offset = Vector2(0, -220)
 gate_size = Vector2(38, 300)
 
-[node name="Plate2" parent="." instance=ExtResource("2_plate")]
-position = Vector2(1020, 995)
+[node name="Plate2" parent="." unique_id=2141465180 instance=ExtResource("2_plate")]
+position = Vector2(1000, 995)
 plate_color = Color(0.95, 0.6, 0.2, 1)
 
-[node name="Gate2" parent="." instance=ExtResource("3_gate")]
+[node name="Plate2_B" parent="." instance=ExtResource("2_plate")]
+position = Vector2(1180, 995)
+plate_color = Color(0.95, 0.6, 0.2, 1)
+
+[node name="Gate2" parent="." unique_id=1026469744 instance=ExtResource("3_gate")]
 position = Vector2(1300, 570)
 open_offset = Vector2(0, -220)
 gate_size = Vector2(38, 300)
 
-[node name="ExitZone" parent="." instance=ExtResource("4_exit")]
-position = Vector2(1600, 570)
+[node name="ExitZone" parent="." unique_id=184679503 instance=ExtResource("4_exit")]
+position = Vector2(1600, 980)

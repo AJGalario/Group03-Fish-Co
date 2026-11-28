@@ -12,6 +12,11 @@ var _is_triggered: bool = false
 @onready var _glow_ring: ColorRect = $GlowRing
 
 func _ready() -> void:
+	collision_layer = 3
+	collision_mask = 3
+	monitoring = true
+	monitorable = true
+
 	if required_players <= 0:
 		required_players = maxi(1, GameManager.players.size())
 

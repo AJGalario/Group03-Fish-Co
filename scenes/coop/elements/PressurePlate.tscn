@@ -3,9 +3,11 @@
 [ext_resource type="Script" path="res://scenes/coop/elements/PressurePlate.gd" id="1_script"]
 
 [sub_resource type="RectangleShape2D" id="1_shape"]
-size = Vector2(100, 24)
+size = Vector2(110, 36)
 
 [node name="PressurePlate" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_script")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
