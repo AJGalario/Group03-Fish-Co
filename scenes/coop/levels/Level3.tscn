@@ -182,6 +182,20 @@ position = Vector2(1360, 545)
 required_count = 2
 plate_color = Color(0.4, 1.0, 0.7, 1)
 
+[node name="CoordinateLabel" type="Label" parent="."]
+offset_left = 1200.0
+offset_top = 430.0
+offset_right = 1520.0
+offset_bottom = 510.0
+theme_override_colors/font_color = Color(0.4, 1, 0.85, 1)
+theme_override_colors/font_shadow_color = Color(0.02, 0.1, 0.16, 0.85)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 24
+text = "SWIM TOGETHER!
+3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="FinalGate" parent="." instance=ExtResource("3_gate")]
 position = Vector2(1480, 570)
 open_offset = Vector2(0, -220)
